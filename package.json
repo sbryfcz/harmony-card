@@ -1,6 +1,6 @@
 {
     "name": "harmony-card",
-    "version": "1.1.7",
+    "version": "1.0.0",
     "description": "Lovelace harmony-card",
     "keywords": [
         "home-assistant",
@@ -8,11 +8,12 @@
         "hass",
         "automation",
         "lovelace",
-        "custom-cards"
+        "custom-cards",
+        "harmony"
     ],
     "module": "harmony-card.js",
-    "repository": "git@github.com:custom_cards/harmony-card.git",
-    "author": "Ian Richardson <iantrich@gmail.com>",
+    "repository": "https://github.com/sbryfcz/harmony-card.git",
+    "author": "Sam Bryfczynski <sbryfcz@gmail.com>",
     "license": "MIT",
     "dependencies": {
         "@polymer/paper-button": "^3.0.1",
