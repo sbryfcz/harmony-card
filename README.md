@@ -8,6 +8,7 @@ A custom Home Assistant card to integrate with Harmony Hubs.
 
 [![GitHub Activity][commits-shield]][commits]
 
+![Screenshot of Card](https://github.com/sbryfcz/harmony-card/blob/master/img/screenshot.png?raw=true)
 
 ## Support
 

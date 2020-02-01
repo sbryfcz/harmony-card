@@ -60,11 +60,15 @@ export class HarmonyCard extends LitElement {
         };
     }
 
-    protected xboxCommand(e, cmd: string) {
+    protected deviceCommand(e, device: string | undefined, cmd: string) {
         e.preventDefault();
         e.stopPropagation();
 
-        this.hass?.callService("remote", "send_command", { entity_id: this._config?.entity, command: cmd, device: 'Microsoft Xbox One' });
+        if (null == device) {
+            return;
+        }
+
+        this.hass?.callService("remote", "send_command", { entity_id: this._config?.entity, command: cmd, device: device });
     }
 
     protected harmonyCommand(e, activity: string) {
@@ -145,6 +149,8 @@ export class HarmonyCard extends LitElement {
         var volume = volume_state.attributes.volume_level;
         var muted = volume_state.attributes.is_volume_muted;
 
+        var current_activity_config = this._config.activities.find(activity => activity.name === current_activity);
+        var current_device = current_activity_config?.device;
 
         return html`
       <ha-card
@@ -161,8 +167,10 @@ export class HarmonyCard extends LitElement {
         <div class="card-content">
             <div class="activities">
                 <mwc-button ?outlined="${hub_power_state === "off"}" label="Off" @click="${e => this.harmonyCommand(e, 'turn_off')}"></mwc-button>
-                <mwc-button ?outlined="${current_activity === "Play Xbox One"}" label="Play Xbox One" @click="${e => this.harmonyCommand(e, 'Play Xbox One')}"></mwc-button>
-                <mwc-button ?outlined="${current_activity === "Listen to Music"}" label="Listen to Music" @click="${e => this.harmonyCommand(e, 'Listen to Music')}"></mwc-button>
+                
+                ${this._config.activities.map(activity => html`
+                    <mwc-button ?outlined="${current_activity === activity.name}" label=${activity.name} @click="${e => this.harmonyCommand(e, activity.name)}"></mwc-button>
+                `)}
             </div>
 
             <div class="volume-controls">
@@ -182,28 +190,28 @@ export class HarmonyCard extends LitElement {
             </div>
 
             <div class="play-pause">
-                <paper-icon-button icon="mdi:skip-previous" @click="${e => this.xboxCommand(e, 'SkipBack')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:play" @click="${e => this.xboxCommand(e, 'Play')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:pause" @click="${e => this.xboxCommand(e, 'Pause')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:skip-next" @click="${e => this.xboxCommand(e, 'SkipForward')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:skip-previous" @click="${e => this.deviceCommand(e, current_device, 'SkipBack')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:play" @click="${e => this.deviceCommand(e, current_device, 'Play')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:pause" @click="${e => this.deviceCommand(e, current_device, 'Pause')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:skip-next" @click="${e => this.deviceCommand(e, current_device, 'SkipForward')}"></paper-icon-button>
             </div>
 
             <div class="remote">
-                <paper-icon-button icon="mdi:chevron-left-circle" style="grid-column: 1; grid-row: 2;" @click="${e => this.xboxCommand(e, 'DirectionLeft')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:chevron-right-circle" style="grid-column: 3; grid-row: 2;" @click="${e => this.xboxCommand(e, 'DirectionRight')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:chevron-up-circle" style="grid-column: 2; grid-row: 1;" @click="${e => this.xboxCommand(e, 'DirectionUp')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:chevron-down-circle" style="grid-column: 2; grid-row: 3;" @click="${e => this.xboxCommand(e, 'DirectionDown')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:checkbox-blank-circle" style="grid-column: 2; grid-row: 2;" @click="${e => this.xboxCommand(e, 'OK')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:chevron-left-circle" style="grid-column: 1; grid-row: 2;" @click="${e => this.deviceCommand(e, current_device, 'DirectionLeft')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:chevron-right-circle" style="grid-column: 3; grid-row: 2;" @click="${e => this.deviceCommand(e, current_device, 'DirectionRight')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:chevron-up-circle" style="grid-column: 2; grid-row: 1;" @click="${e => this.deviceCommand(e, current_device, 'DirectionUp')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:chevron-down-circle" style="grid-column: 2; grid-row: 3;" @click="${e => this.deviceCommand(e, current_device, 'DirectionDown')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:checkbox-blank-circle" style="grid-column: 2; grid-row: 2;" @click="${e => this.deviceCommand(e, current_device, 'OK')}"></paper-icon-button>
             </div>        
 
             <div class="xbox-buttons">
-                <paper-icon-button style="grid-column: 1; grid-row: 2;" icon="mdi:xbox" @click="${e => this.xboxCommand(e, 'Xbox')}"></paper-icon-button>
-                <paper-icon-button style="grid-column: 2; grid-row: 2;" icon="mdi:undo-variant" @click="${e => this.xboxCommand(e, 'Back')}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 1; grid-row: 2;" icon="mdi:xbox" @click="${e => this.deviceCommand(e, current_device, 'Xbox')}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 2; grid-row: 2;" icon="mdi:undo-variant" @click="${e => this.deviceCommand(e, current_device, 'Back')}"></paper-icon-button>
 
-                <paper-icon-button style="grid-column: 4; grid-row: 2; color: #2d9f1c;" icon="mdi:alpha-a-circle" @click="${e => this.xboxCommand(e, 'A')}"></paper-icon-button>
-                <paper-icon-button style="grid-column: 5; grid-row: 2; color: #e43308;" icon="mdi:alpha-b-circle" @click="${e => this.xboxCommand(e, 'B')}"></paper-icon-button>
-                <paper-icon-button style="grid-column: 6; grid-row: 2; color: #003bbd;" icon="mdi:alpha-x-circle" @click="${e => this.xboxCommand(e, 'X')}"></paper-icon-button>
-                <paper-icon-button style="grid-column: 7; grid-row: 2; color: #f1c70f;" icon="mdi:alpha-y-circle" @click="${e => this.xboxCommand(e, 'Y')}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 4; grid-row: 2; color: #2d9f1c;" icon="mdi:alpha-a-circle" @click="${e => this.deviceCommand(e, current_device, 'A')}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 5; grid-row: 2; color: #e43308;" icon="mdi:alpha-b-circle" @click="${e => this.deviceCommand(e, current_device, 'B')}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 6; grid-row: 2; color: #003bbd;" icon="mdi:alpha-x-circle" @click="${e => this.deviceCommand(e, current_device, 'X')}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 7; grid-row: 2; color: #f1c70f;" icon="mdi:alpha-y-circle" @click="${e => this.deviceCommand(e, current_device, 'Y')}"></paper-icon-button>
             </div>
         </div>
       </ha-card>
