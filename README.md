@@ -20,15 +20,22 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 
 | Name              | Type    | Requirement  | Description                                 | Default             |
 | ----------------- | ------- | ------------ | ------------------------------------------- | ------------------- |
-| type              | string  | **Required** | `custom:harmony-card`                   |
-| name              | string  | **Optional** | Card name                                   | `Harmony`       |
-| show_error        | boolean | **Optional** | Show what an error looks like for the card  | `false`             |
-| show_warning      | boolean | **Optional** | Show what a warning looks like for the card | `false`             |
+| type              | string  | **Required** | `custom:harmony-card`                       |                     |
+| name              | string  | **Optional** | Card name                                   |                     |
 | entity            | string  | **Required** | Home Assistant entity ID of Harmony         |                     |
-| volume_entity     | string  | **Required** | Home Assistant entity ID of volume control media_player|                     |
+| volume_entity     | string  | **Required** | Home Assistant entity ID of volume control media_player|          |
+| activites         | Activity| **Required** | List of Activities (see below)          |                     |
 | tap_action        | object  | **Optional** | Action to take on tap                       | `action: more-info` |
 | hold_action       | object  | **Optional** | Action to take on hold                      | `none`              |
 | double_tap_action | object  | **Optional** | Action to take on hold                      | `none`              |
+| show_error        | boolean | **Optional** | Show what an error looks like for the card  | `false`             |
+| show_warning      | boolean | **Optional** | Show what a warning looks like for the card | `false`             |
+
+## Activity Options
+| Name               | Type    | Requirement   | Description                      | Default |
+| ------------------ | ------- | ------------- | -------------------------------- | ------- |
+| name               | string  | **Required**  | The name of the harmony activity as named in the harmony config | |
+| device               | string  | **Required**  | The name of the harmony device as named in the harmony config to use for sending commands | |
 
 ## Action Options
 
@@ -55,6 +62,11 @@ resources:
 - type: 'custom:harmony-card'
   entity: remote.living_room_hub
   volume_entity: media_player.living_room
+  activities:
+  - name: Play Xbox One
+    device: Microsoft Xbox One
+  - name: Listen to Music
+    device: Onkyo AV Receiver
 ```
 
 ## Development
