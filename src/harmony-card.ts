@@ -60,9 +60,14 @@ export class HarmonyCard extends LitElement {
         };
     }
 
-    protected deviceCommand(e, device: string | undefined, cmd: string) {
-        e.preventDefault();
+    protected preventBubbling(e) {
+        // e.preventDefault();
         e.stopPropagation();
+        e.cancelBubble = true;
+    }
+
+    protected deviceCommand(e, device: string | undefined, cmd: string) {
+        this.preventBubbling(e);
 
         if (null == device) {
             return;
@@ -72,8 +77,7 @@ export class HarmonyCard extends LitElement {
     }
 
     protected harmonyCommand(e, activity: string) {
-        e.preventDefault();
-        e.stopPropagation();
+        this.preventBubbling(e);
 
         if (null == activity || activity == "off" || activity == 'turn_off') {
             this.hass?.callService("remote", "turn_off", { entity_id: this._config?.entity });
@@ -84,8 +88,7 @@ export class HarmonyCard extends LitElement {
     }
 
     protected volumeCommand(e, command: string, attributes?: any) {
-        e.preventDefault();
-        e.stopPropagation();
+        this.preventBubbling(e);
 
         if (this._config?.volume_entity) {
 
@@ -166,19 +169,20 @@ export class HarmonyCard extends LitElement {
       >
         <div class="card-content">
             <div class="activities">
-                <mwc-button ?outlined="${hub_power_state === "off"}" label="Off" @click="${e => this.harmonyCommand(e, 'turn_off')}"></mwc-button>
+                <mwc-button ?outlined="${hub_power_state === "off"}" label="Off" @click="${e => this.harmonyCommand(e, 'turn_off')}" @touchstart="${e => this.preventBubbling(e)}"></mwc-button>
                 
                 ${this._config.activities.map(activity => html`
-                    <mwc-button ?outlined="${current_activity === activity.name}" label=${activity.name} @click="${e => this.harmonyCommand(e, activity.name)}"></mwc-button>
+                    <mwc-button ?outlined="${current_activity === activity.name}" label=${activity.name} @click="${e => this.harmonyCommand(e, activity.name)}" @touchstart="${e => this.preventBubbling(e)}"></mwc-button>
                 `)}
             </div>
 
             <div class="volume-controls">
-                <paper-icon-button icon="mdi:volume-medium" @click="${e => this.volumeCommand(e, 'volume_down')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:volume-high" @click="${e => this.volumeCommand(e, 'volume_up')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:volume-medium" @click="${e => this.volumeCommand(e, 'volume_down')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button icon="mdi:volume-high" @click="${e => this.volumeCommand(e, 'volume_up')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
                 <paper-slider           
                     @change=${e => this.volumeCommand(e, 'volume_set', { volume_level: e.target.value / 100 })}
                     @click=${e => e.stopPropagation()}
+                    @touchstart="${e => this.preventBubbling(e)}"
                     ?disabled=${muted}
                     min=0 max=100
                     value=${volume * 100}
@@ -186,32 +190,32 @@ export class HarmonyCard extends LitElement {
                     ignore-bar-touch pin>
                 </paper-slider>
                 
-                <paper-icon-button icon="mdi:volume-off" @click="${e => this.volumeCommand(e, 'volume_mute', { is_volume_muted: true })}"></paper-icon-button>
+                <paper-icon-button icon="mdi:volume-off" @click="${e => this.volumeCommand(e, 'volume_mute', { is_volume_muted: true })}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
             </div>
 
             <div class="play-pause">
-                <paper-icon-button icon="mdi:skip-previous" @click="${e => this.deviceCommand(e, current_device, 'SkipBack')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:play" @click="${e => this.deviceCommand(e, current_device, 'Play')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:pause" @click="${e => this.deviceCommand(e, current_device, 'Pause')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:skip-next" @click="${e => this.deviceCommand(e, current_device, 'SkipForward')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:skip-previous" @click="${e => this.deviceCommand(e, current_device, 'SkipBack')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button icon="mdi:play" @click="${e => this.deviceCommand(e, current_device, 'Play')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button icon="mdi:pause" @click="${e => this.deviceCommand(e, current_device, 'Pause')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button icon="mdi:skip-next" @click="${e => this.deviceCommand(e, current_device, 'SkipForward')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
             </div>
 
             <div class="remote">
-                <paper-icon-button icon="mdi:chevron-left-circle" style="grid-column: 1; grid-row: 2;" @click="${e => this.deviceCommand(e, current_device, 'DirectionLeft')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:chevron-right-circle" style="grid-column: 3; grid-row: 2;" @click="${e => this.deviceCommand(e, current_device, 'DirectionRight')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:chevron-up-circle" style="grid-column: 2; grid-row: 1;" @click="${e => this.deviceCommand(e, current_device, 'DirectionUp')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:chevron-down-circle" style="grid-column: 2; grid-row: 3;" @click="${e => this.deviceCommand(e, current_device, 'DirectionDown')}"></paper-icon-button>
-                <paper-icon-button icon="mdi:checkbox-blank-circle" style="grid-column: 2; grid-row: 2;" @click="${e => this.deviceCommand(e, current_device, 'OK')}"></paper-icon-button>
+                <paper-icon-button icon="mdi:chevron-left-circle" style="grid-column: 1; grid-row: 2;" @click="${e => this.deviceCommand(e, current_device, 'DirectionLeft')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button icon="mdi:chevron-right-circle" style="grid-column: 3; grid-row: 2;" @click="${e => this.deviceCommand(e, current_device, 'DirectionRight')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button icon="mdi:chevron-up-circle" style="grid-column: 2; grid-row: 1;" @click="${e => this.deviceCommand(e, current_device, 'DirectionUp')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button icon="mdi:chevron-down-circle" style="grid-column: 2; grid-row: 3;" @click="${e => this.deviceCommand(e, current_device, 'DirectionDown')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button icon="mdi:checkbox-blank-circle" style="grid-column: 2; grid-row: 2;" @click="${e => this.deviceCommand(e, current_device, 'OK')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
             </div>        
 
             <div class="xbox-buttons">
-                <paper-icon-button style="grid-column: 1; grid-row: 2;" icon="mdi:xbox" @click="${e => this.deviceCommand(e, current_device, 'Xbox')}"></paper-icon-button>
-                <paper-icon-button style="grid-column: 2; grid-row: 2;" icon="mdi:undo-variant" @click="${e => this.deviceCommand(e, current_device, 'Back')}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 1; grid-row: 2;" icon="mdi:xbox" @click="${e => this.deviceCommand(e, current_device, 'Xbox')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 2; grid-row: 2;" icon="mdi:undo-variant" @click="${e => this.deviceCommand(e, current_device, 'Back')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
 
-                <paper-icon-button style="grid-column: 4; grid-row: 2; color: #2d9f1c;" icon="mdi:alpha-a-circle" @click="${e => this.deviceCommand(e, current_device, 'A')}"></paper-icon-button>
-                <paper-icon-button style="grid-column: 5; grid-row: 2; color: #e43308;" icon="mdi:alpha-b-circle" @click="${e => this.deviceCommand(e, current_device, 'B')}"></paper-icon-button>
-                <paper-icon-button style="grid-column: 6; grid-row: 2; color: #003bbd;" icon="mdi:alpha-x-circle" @click="${e => this.deviceCommand(e, current_device, 'X')}"></paper-icon-button>
-                <paper-icon-button style="grid-column: 7; grid-row: 2; color: #f1c70f;" icon="mdi:alpha-y-circle" @click="${e => this.deviceCommand(e, current_device, 'Y')}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 4; grid-row: 2; color: #2d9f1c;" icon="mdi:alpha-a-circle" @click="${e => this.deviceCommand(e, current_device, 'A')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 5; grid-row: 2; color: #e43308;" icon="mdi:alpha-b-circle" @click="${e => this.deviceCommand(e, current_device, 'B')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 6; grid-row: 2; color: #003bbd;" icon="mdi:alpha-x-circle" @click="${e => this.deviceCommand(e, current_device, 'X')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button style="grid-column: 7; grid-row: 2; color: #f1c70f;" icon="mdi:alpha-y-circle" @click="${e => this.deviceCommand(e, current_device, 'Y')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
             </div>
         </div>
       </ha-card>
