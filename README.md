@@ -9,11 +9,11 @@ A custom Home Assistant card to integrate with Harmony Hubs.
 [![GitHub Activity][commits-shield]][commits]
 
 
-<!-- ## Support
+## Support
 
-Hey dude! Help me out for a couple of :beers: or a :coffee:!
+Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or a :coffee:!
 
-[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](https://www.buymeacoffee.com/zJtVxUAgH) -->
+[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](https://www.buymeacoffee.com/NQbRdC5)
 
 ## Options
 
@@ -23,7 +23,8 @@ Hey dude! Help me out for a couple of :beers: or a :coffee:!
 | name              | string  | **Optional** | Card name                                   | `Harmony`       |
 | show_error        | boolean | **Optional** | Show what an error looks like for the card  | `false`             |
 | show_warning      | boolean | **Optional** | Show what a warning looks like for the card | `false`             |
-| entity            | string  | **Optional** | Home Assistant entity ID.                   | `none`              |
+| entity            | string  | **Required** | Home Assistant entity ID of Harmony         |                     |
+| volume_entity     | string  | **Required** | Home Assistant entity ID of volume control media_player|                     |
 | tap_action        | object  | **Optional** | Action to take on tap                       | `action: more-info` |
 | hold_action       | object  | **Optional** | Action to take on hold                      | `none`              |
 | double_tap_action | object  | **Optional** | Action to take on hold                      | `none`              |
@@ -39,6 +40,21 @@ Hey dude! Help me out for a couple of :beers: or a :coffee:!
 | service_data    | object | **Optional** | Service data to include (e.g. entity_id: media_player.bedroom) when action defined as call-service                                     | `none`      |
 | haptic          | string | **Optional** | Haptic feedback for the [Beta IOS App](http://home-assistant.io/ios/beta) _success, warning, failure, light, medium, heavy, selection_ | `none`      |
 | repeat          | number | **Optional** | How often to repeat the `hold_action` in milliseconds.                                                                                 | `non`       |
+
+## Example Configuration
+### Resources
+```yaml
+resources:
+- type: module
+  url: '/community_plugin/harmony-card/harmony-card.js'
+```
+
+### Card
+```yaml
+- type: 'custom:harmony-card'
+  entity: remote.living_room_hub
+  volume_entity: media_player.living_room
+```
 
 ## Development
 
@@ -59,7 +75,7 @@ Run in a server using `npm run start`. This will host the resource locally. Add 
 ```yaml
 resources:
 - type: module
-  url: 'http://192.168.86.28:5000/harmony-card.js'
+  url: 'http://0.0.0.0:5000/harmony-card.js'
 ```
 
 [commits-shield]: https://img.shields.io/github/commit-activity/y/sbryfcz/harmony-card.svg?style=for-the-badge
@@ -68,5 +84,3 @@ resources:
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2019.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/sbryfcz/harmony-card.svg?style=for-the-badge
 [releases]: https://github.com/sbryfcz/harmony-card/releases
-
-url: 'http://192.168.86.28:5000/harmony-card.js'
