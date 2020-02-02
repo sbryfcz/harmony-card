@@ -4,7 +4,8 @@ import { ActionConfig } from 'custom-card-helpers';
 export interface HarmonyCardConfig {
     type: string;
     entity: string;
-    volume_entity: string;
+    volume_entity?: string;
+    volume_device?: string;
     activities: HarmonyActivityCardConfig[];
     scale?: number;
     name?: string;
@@ -19,4 +20,6 @@ export interface HarmonyCardConfig {
 export interface HarmonyActivityCardConfig {
     name: string;
     device: string;
+    volume_entity?: string;
+    volume_device?: string;
 }
