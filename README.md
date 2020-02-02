@@ -23,8 +23,9 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | type              | string  | **Required** | `custom:harmony-card`                       |                     |
 | name              | string  | **Optional** | Card name                                   |                     |
 | entity            | string  | **Required** | Home Assistant entity ID of Harmony         |                     |
-| volume_entity     | string  | **Required** | Home Assistant entity ID of volume control media_player|          |
-| activites         | Activity| **Required** | List of Activities (see below)          |                     |
+| volume_entity     | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
+| volume_device     | string  | **Optional** | Harmony device name to control volume       |                     |
+| activites         | Activity| **Required** | List of Activities (see below)              |                     |
 | scale             | number  | **Optional** | A multiplier to scale the icons by          | 1                   |
 | tap_action        | object  | **Optional** | Action to take on tap                       | `action: more-info` |
 | hold_action       | object  | **Optional** | Action to take on hold                      | `none`              |
@@ -36,7 +37,9 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | Name               | Type    | Requirement   | Description                      | Default |
 | ------------------ | ------- | ------------- | -------------------------------- | ------- |
 | name               | string  | **Required**  | The name of the harmony activity as named in the harmony config | |
-| device               | string  | **Required**  | The name of the harmony device as named in the harmony config to use for sending commands | |
+| device             | string  | **Required**  | The name of the harmony device as named in the harmony config to use for sending commands | |
+| volume_entity      | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
+| volume_device      | string  | **Optional** | Harmony device name to control volume       |                     |
 
 ## Action Options
 
@@ -49,6 +52,29 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | service_data    | object | **Optional** | Service data to include (e.g. entity_id: media_player.bedroom) when action defined as call-service                                     | `none`      |
 | haptic          | string | **Optional** | Haptic feedback for the [Beta IOS App](http://home-assistant.io/ios/beta) _success, warning, failure, light, medium, heavy, selection_ | `none`      |
 | repeat          | number | **Optional** | How often to repeat the `hold_action` in milliseconds.                                                                                 | `non`       |
+### Configuration Order of Precedence
+In general the configuration for the card will be determined from more specific configuration to less specific configuration. By this, I mean that if there is both global card configuration and activity configuration, this plugin will use the activity level configuration.
+
+Ex.
+```yaml
+- type: 'custom:harmony-card'
+  entity: remote.living_room_hub
+  volume_entity: media_player.living_room
+  activities:
+  - name: Play Xbox One
+    device: Microsoft Xbox One
+    volume_entity: media_player.alexa
+  - name: Listen to Music
+    device: Onkyo AV Receiver
+```
+
+In this case, the card will issue commands via `media_player.alexa` if the current activity is 'Play Xbox One'. Otherwise, it will use `media_player.living_room`.
+
+Furthermore, volume controls try to use specified media players (if configured) since those offer most robust functionality (ie. the volume slider). So the order of precedence for volume controls are:
+1. Activity Level volume_entity
+2. Activity Level volume_device
+3. Card Level volume_entity
+4. Card Level volume_device
 
 ## Example Configuration
 ### Resources

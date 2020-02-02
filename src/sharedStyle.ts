@@ -72,6 +72,7 @@ const sharedStyle = css`
 
   .volume-controls {
       display: flex;
+      justify-content: center;
   }
 
   .volume-controls>paper-slider {
