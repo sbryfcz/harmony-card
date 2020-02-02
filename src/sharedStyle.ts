@@ -46,10 +46,11 @@ const sharedStyle = css`
 
   .activities {
       display: flex;
+      flex-wrap: wrap;
   }
 
   .activities>mwc-button:not(:first-child) {
-    flex: 1;
+    flex-grow: 1;
   }
 
   .remote {

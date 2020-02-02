@@ -6,6 +6,7 @@ export interface HarmonyCardConfig {
     entity: string;
     volume_entity: string;
     activities: HarmonyActivityCardConfig[];
+    scale?: number;
     name?: string;
     show_warning?: boolean;
     show_error?: boolean;

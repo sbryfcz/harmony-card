@@ -8,6 +8,8 @@ import {
     getLovelace,
 } from 'custom-card-helpers';
 
+import { styleMap } from 'lit-html/directives/style-map';
+
 import 'fa-icons';
 import sharedStyle from './sharedStyle';
 
@@ -157,6 +159,7 @@ export class HarmonyCard extends LitElement {
 
         return html`
       <ha-card
+        style=${this.computeStyles()}
         .header=${this._config.name}
         @action=${this._handleAction}
         .actionHandler=${actionHandler({
@@ -226,6 +229,12 @@ export class HarmonyCard extends LitElement {
         if (this.hass && this._config && ev.detail.action) {
             handleAction(this, this.hass, this._config, ev.detail.action);
         }
+    }
+
+    computeStyles() {
+        var scale = this._config?.scale || 1;
+
+        return styleMap({ '--mmp-unit': `${40 * scale}px` });
     }
 
     static get styles() {
