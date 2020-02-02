@@ -25,6 +25,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | entity            | string  | **Required** | Home Assistant entity ID of Harmony         |                     |
 | volume_entity     | string  | **Required** | Home Assistant entity ID of volume control media_player|          |
 | activites         | Activity| **Required** | List of Activities (see below)          |                     |
+| scale             | number  | **Optional** | A multiplier to scale the icons by          | 1                   |
 | tap_action        | object  | **Optional** | Action to take on tap                       | `action: more-info` |
 | hold_action       | object  | **Optional** | Action to take on hold                      | `none`              |
 | double_tap_action | object  | **Optional** | Action to take on hold                      | `none`              |
@@ -62,6 +63,7 @@ resources:
 - type: 'custom:harmony-card'
   entity: remote.living_room_hub
   volume_entity: media_player.living_room
+  scale: 1.25
   activities:
   - name: Play Xbox One
     device: Microsoft Xbox One
