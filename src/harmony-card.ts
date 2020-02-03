@@ -181,7 +181,7 @@ export class HarmonyCard extends LitElement {
             ${this.renderVolumeControls(this.hass, this._config, buttonConfig, currentActivityConfig)}
 
             <div class="play-pause">
-                ${this.renderIconButton(buttonConfig['skip_forward'], currentDevice)}
+                ${this.renderIconButton(buttonConfig['skip_back'], currentDevice)}
                 ${this.renderIconButton(buttonConfig['play'], currentDevice)}
                 ${this.renderIconButton(buttonConfig['pause'], currentDevice)}
                 ${this.renderIconButton(buttonConfig['skip_forward'], currentDevice)}
