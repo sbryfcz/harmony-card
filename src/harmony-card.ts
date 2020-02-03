@@ -217,7 +217,7 @@ export class HarmonyCard extends LitElement {
             <paper-icon-button 
                 icon="${buttonConfig.icon}" 
                 style="${styles}"
-                @click="${e => this.deviceCommand(e, device, buttonConfig.command || '')}" 
+                @click="${e => this.deviceCommand(e, buttonConfig.device || device, buttonConfig.command || '')}" 
                 @touchstart="${e => this.preventBubbling(e)}">
             </paper-icon-button>
         `;

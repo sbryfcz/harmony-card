@@ -64,6 +64,7 @@ These options let you override the default icon, commands, devices, and visibili
 | hide              | string  | **Optional** | Should this button be hidden                | false               |
 
 Buttons Available to Configure with Defaults:
+```json
 'volume_down': {
     command: 'VolumeDown',
     icon: 'mdi:volume-medium',
@@ -154,6 +155,7 @@ Buttons Available to Configure with Defaults:
     icon: 'mdi:alpha-y-circle',
     hide: false
 }
+```
 
 ### Configuration Order of Precedence
 In general the configuration for the card will be determined from more specific configuration to less specific configuration. By this, I mean that if there is both global card configuration and activity configuration, this plugin will use the activity level configuration.
@@ -173,11 +175,19 @@ Ex.
 
 In this case, the card will issue commands via `media_player.alexa` if the current activity is 'Play Xbox One'. Otherwise, it will use `media_player.living_room`.
 
+#### Volume
 Furthermore, volume controls try to use specified media players (if configured) since those offer most robust functionality (ie. the volume slider). So the order of precedence for volume controls are:
 1. Activity Level volume_entity
 2. Activity Level volume_device
 3. Card Level volume_entity
 4. Card Level volume_device
+
+#### Devices
+Devices to be used for buttons follow the following order of precedence:
+1. Activity-button level device
+2. Card-button level device
+3. Activity level device
+4. Card level device
 
 ## Example Configuration
 ### Resources
@@ -200,6 +210,27 @@ resources:
     device: Onkyo AV Receiver
 ```
 
+### Card with Custom Button Config
+```yaml
+- type: 'custom:harmony-card'
+  entity: remote.living_room_hub
+  volume_entity: media_player.living_room
+  scale: 1.25
+  activities:
+  - name: Play Xbox One
+    device: Microsoft Xbox One
+  - name: Listen to Music
+    device: Onkyo AV Receiver
+  buttons:
+    a:
+      icon: 'mdi:chevron-up'
+      device: Onkyo AV Receiver
+      command: VolumeUp
+    b:
+      icon: 'mdi:chevron-down'
+      device: Onkyo AV Receiver
+      command: VolumeDown
+```
 ## Development
 
 ### Step 1
