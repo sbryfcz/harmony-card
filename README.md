@@ -27,6 +27,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | volume_device     | string  | **Optional** | Harmony device name to control volume       |                     |
 | activites         | Activity| **Required** | List of Activities (see below)              |                     |
 | scale             | number  | **Optional** | A multiplier to scale the icons by          | 1                   |
+| buttons           | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
 | tap_action        | object  | **Optional** | Action to take on tap                       | `action: more-info` |
 | hold_action       | object  | **Optional** | Action to take on hold                      | `none`              |
 | double_tap_action | object  | **Optional** | Action to take on hold                      | `none`              |
@@ -40,7 +41,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | device             | string  | **Required**  | The name of the harmony device as named in the harmony config to use for sending commands | |
 | volume_entity      | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
 | volume_device      | string  | **Optional** | Harmony device name to control volume       |                     |
-
+| buttons           | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
 ## Action Options
 
 | Name            | Type   | Requirement  | Description                                                                                                                            | Default     |
@@ -52,6 +53,108 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | service_data    | object | **Optional** | Service data to include (e.g. entity_id: media_player.bedroom) when action defined as call-service                                     | `none`      |
 | haptic          | string | **Optional** | Haptic feedback for the [Beta IOS App](http://home-assistant.io/ios/beta) _success, warning, failure, light, medium, heavy, selection_ | `none`      |
 | repeat          | number | **Optional** | How often to repeat the `hold_action` in milliseconds.                                                                                 | `non`       |
+## Button Options
+These options let you override the default icon, commands, devices, and visibility.
+
+| Name              | Type    | Requirement  | Description                                 | Default             |
+| ----------------- | ------- | ------------ | ------------------------------------------- | ------------------- |
+| command           | string  | **Optional** | The device command to use                   | See below           |
+| device            | string  | **Optional** | The harmony device name to send the command to   | See below         |
+| icon              | string  | **Optional** | The icon to display for the button          | See below           |
+| hide              | string  | **Optional** | Should this button be hidden                | false               |
+
+Buttons Available to Configure with Defaults:
+'volume_down': {
+    command: 'VolumeDown',
+    icon: 'mdi:volume-medium',
+    hide: false
+},
+'volume_up': {
+    command: 'VolumeUp',
+    icon: 'mdi:volume-high',
+    hide: false
+},
+'volume_mute': {
+    command: 'Mute',
+    icon: 'mdi:volume-off',
+    hide: false
+},
+'skip_back': {
+    command: 'SkipBack',
+    icon: 'mdi:skip-previous',
+    hide: false
+},
+'play': {
+    command: 'Play',
+    icon: 'mdi:play',
+    hide: false
+},
+'pause': {
+    command: 'Pause',
+    icon: 'mdi:pause',
+    hide: false
+},
+'skip_forward': {
+    command: 'SkipForward',
+    icon: 'mdi:skip-next',
+    hide: false
+},
+'dpad_up': {
+    command: 'DirectionUp',
+    icon: 'mdi:chevron-up-circle',
+    hide: false
+},
+'dpad_down': {
+    command: 'DirectionDown',
+    icon: 'mdi:chevron-down-circle',
+    hide: false
+},
+'dpad_left': {
+    command: 'DirectionLeft',
+    icon: 'mdi:chevron-left-circle',
+    hide: false
+},
+'dpad_right': {
+    command: 'DirectionRight',
+    icon: 'mdi:chevron-right-circle',
+    hide: false
+},
+'dpad_center': {
+    command: 'OK',
+    icon: 'mdi:checkbox-blank-circle',
+    hide: false
+},
+'xbox': {
+    command: 'Xbox',
+    icon: 'mdi:xbox',
+    hide: false
+},
+'back': {
+    command: 'Back',
+    icon: 'mdi:undo-variant',
+    hide: false
+},
+'a': {
+    command: 'A',
+    icon: 'mdi:alpha-a-circle',
+    hide: false
+},
+'b': {
+    command: 'B',
+    icon: 'mdi:alpha-b-circle',
+    hide: false
+},
+'x': {
+    command: 'X',
+    icon: 'mdi:alpha-x-circle',
+    hide: false
+},
+'y': {
+    command: 'Y',
+    icon: 'mdi:alpha-y-circle',
+    hide: false
+}
+
 ### Configuration Order of Precedence
 In general the configuration for the card will be determined from more specific configuration to less specific configuration. By this, I mean that if there is both global card configuration and activity configuration, this plugin will use the activity level configuration.
 
