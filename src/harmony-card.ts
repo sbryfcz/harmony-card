@@ -154,7 +154,6 @@ export class HarmonyCard extends LitElement {
         var currentActivityConfig = this._config.activities.find(activity => activity.name === currentActivity);
         var currentDevice = currentActivityConfig?.device;
 
-        console.log('Set button config');
         var buttonConfig = this.computeButtonConfig(this._config, currentActivityConfig);
 
         return html`
