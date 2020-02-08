@@ -31,4 +31,5 @@ export interface HarmonyButtonConfig {
     device?: string;
     icon?: string;
     hide?: boolean;
+    color?: string;
 }

@@ -1,6 +1,6 @@
 import { HarmonyButtonConfig } from "./types";
 
-export const CARD_VERSION = '0.9.1';
+export const CARD_VERSION = '0.10.0';
 
 export const DEFAULT_BUTTONS: { [key: string]: HarmonyButtonConfig } = {
     'volume_down': {
@@ -76,21 +76,25 @@ export const DEFAULT_BUTTONS: { [key: string]: HarmonyButtonConfig } = {
     'a': {
         command: 'A',
         icon: 'mdi:alpha-a-circle',
-        hide: false
+        hide: false,
+        color: '#2d9f1c'
     },
     'b': {
         command: 'B',
         icon: 'mdi:alpha-b-circle',
-        hide: false
+        hide: false,
+        color: '#e43308'
     },
     'x': {
         command: 'X',
         icon: 'mdi:alpha-x-circle',
-        hide: false
+        hide: false,
+        color: '#003bbd'
     },
     'y': {
         command: 'Y',
         icon: 'mdi:alpha-y-circle',
-        hide: false
+        hide: false,
+        color: '#f1c70f'
     }
 };

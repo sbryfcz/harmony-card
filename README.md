@@ -41,7 +41,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | device             | string  | **Required**  | The name of the harmony device as named in the harmony config to use for sending commands | |
 | volume_entity      | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
 | volume_device      | string  | **Optional** | Harmony device name to control volume       |                     |
-| buttons           | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
+| buttons            | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
 ## Action Options
 
 | Name            | Type   | Requirement  | Description                                                                                                                            | Default     |
@@ -62,6 +62,7 @@ These options let you override the default icon, commands, devices, and visibili
 | device            | string  | **Optional** | The harmony device name to send the command to   | See below         |
 | icon              | string  | **Optional** | The icon to display for the button          | See below           |
 | hide              | string  | **Optional** | Should this button be hidden                | false               |
+| color             | string  | **Optional** | A css string to represent the color ex. '#ff0000'  |                     |
 
 Buttons Available to Configure with Defaults:
 ```yaml
