@@ -126,18 +126,22 @@ a:
     command: 'A',
     icon: 'mdi:alpha-a-circle',
     hide: false
+    color: '#2d9f1c'
 b:
     command: 'B',
     icon: 'mdi:alpha-b-circle',
     hide: false
+    color: '#e43308'
 x:
     command: 'X',
     icon: 'mdi:alpha-x-circle',
     hide: false
+    color: '#003bbd'
 y:
     command: 'Y',
     icon: 'mdi:alpha-y-circle',
     hide: false
+    color: '#f1c70f'
 ```
 
 ### Configuration Order of Precedence
