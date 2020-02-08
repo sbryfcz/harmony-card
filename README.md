@@ -53,6 +53,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | service_data    | object | **Optional** | Service data to include (e.g. entity_id: media_player.bedroom) when action defined as call-service                                     | `none`      |
 | haptic          | string | **Optional** | Haptic feedback for the [Beta IOS App](http://home-assistant.io/ios/beta) _success, warning, failure, light, medium, heavy, selection_ | `none`      |
 | repeat          | number | **Optional** | How often to repeat the `hold_action` in milliseconds.                                                                                 | `non`       |
+
 ## Button Options
 These options let you override the default icon, commands, devices, and visibility.
 
