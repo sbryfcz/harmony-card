@@ -8,7 +8,7 @@ import {
     getLovelace,
 } from 'custom-card-helpers';
 
-import { styleMap } from 'lit-html/directives/style-map';
+import { styleMap, StyleInfo } from 'lit-html/directives/style-map';
 
 import 'fa-icons';
 import sharedStyle from './sharedStyle';
@@ -154,6 +154,7 @@ export class HarmonyCard extends LitElement {
         var currentActivityConfig = this._config.activities.find(activity => activity.name === currentActivity);
         var currentDevice = currentActivityConfig?.device;
 
+        console.log('Set button config');
         var buttonConfig = this.computeButtonConfig(this._config, currentActivityConfig);
 
         return html`
@@ -188,35 +189,37 @@ export class HarmonyCard extends LitElement {
             </div>
 
             <div class="remote">
-                ${this.renderIconButton(buttonConfig['dpad_left'], currentDevice, "grid-column: 1; grid-row: 2;")}
-                ${this.renderIconButton(buttonConfig['dpad_right'], currentDevice, "grid-column: 3; grid-row: 2;")}
-                ${this.renderIconButton(buttonConfig['dpad_up'], currentDevice, "grid-column: 2; grid-row: 1;")}
-                ${this.renderIconButton(buttonConfig['dpad_down'], currentDevice, "grid-column: 2; grid-row: 3;")}
-                ${this.renderIconButton(buttonConfig['dpad_center'], currentDevice, "grid-column: 2; grid-row: 2;")}        
+                ${this.renderIconButton(buttonConfig['dpad_left'], currentDevice, { 'grid-column': '1', 'grid-row': '2' })}
+                ${this.renderIconButton(buttonConfig['dpad_right'], currentDevice, { 'grid-column': '3', 'grid-row': '2' })}
+                ${this.renderIconButton(buttonConfig['dpad_up'], currentDevice, { 'grid-column': '2', 'grid-row': '1' })}
+                ${this.renderIconButton(buttonConfig['dpad_down'], currentDevice, { 'grid-column': '2', 'grid-row': '3' })}
+                ${this.renderIconButton(buttonConfig['dpad_center'], currentDevice, { 'grid-column': '2', 'grid-row': '2' })}        
             </div>        
 
             <div class="xbox-buttons">
-                ${this.renderIconButton(buttonConfig['xbox'], currentDevice, "grid-column: 1; grid-row: 2;")}
-                ${this.renderIconButton(buttonConfig['back'], currentDevice, "grid-column: 2; grid-row: 2;")}
-                ${this.renderIconButton(buttonConfig['a'], currentDevice, "grid-column: 4; grid-row: 2; color: #2d9f1c;")}
-                ${this.renderIconButton(buttonConfig['b'], currentDevice, "grid-column: 5; grid-row: 2; color: #e43308;")}
-                ${this.renderIconButton(buttonConfig['x'], currentDevice, "grid-column: 6; grid-row: 2; color: #003bbd;")}        
-                ${this.renderIconButton(buttonConfig['y'], currentDevice, "grid-column: 7; grid-row: 2; color: #f1c70f;")}        
+                ${this.renderIconButton(buttonConfig['xbox'], currentDevice, { 'grid-column': '1', 'grid-row': '2' })}
+                ${this.renderIconButton(buttonConfig['back'], currentDevice, { 'grid-column': '2', 'grid-row': '2' })}
+                ${this.renderIconButton(buttonConfig['a'], currentDevice, { 'grid-column': '4', 'grid-row': '2' })}
+                ${this.renderIconButton(buttonConfig['b'], currentDevice, { 'grid-column': '5', 'grid-row': '2' })}
+                ${this.renderIconButton(buttonConfig['x'], currentDevice, { 'grid-column': '6', 'grid-row': '2' })}        
+                ${this.renderIconButton(buttonConfig['y'], currentDevice, { 'grid-column': '7', 'grid-row': '2' })}        
             </div>
         </div>
       </ha-card>
     `;
     }
 
-    private renderIconButton(buttonConfig: HarmonyButtonConfig, device?: string, styles?: string) {
+    private renderIconButton(buttonConfig: HarmonyButtonConfig, device?: string, styles?: StyleInfo) {
         if (buttonConfig.hide === true) {
             return html``;
         }
 
+        var buttonStyles = Object.assign(styles || {}, { color: buttonConfig.color });
+
         return html`
             <paper-icon-button 
                 icon="${buttonConfig.icon}" 
-                style="${styles}"
+                style="${styleMap(buttonStyles)}"
                 @click="${e => this.deviceCommand(e, buttonConfig.device || device, buttonConfig.command || '')}" 
                 @touchstart="${e => this.preventBubbling(e)}">
             </paper-icon-button>
@@ -246,10 +249,14 @@ export class HarmonyCard extends LitElement {
         var volume = volume_state.attributes.volume_level;
         var muted = volume_state.attributes.is_volume_muted;
 
+        var volumeDownStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_down'].color });
+        var volumeUpStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_up'].color });
+        var volumeMuteStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_mute'].color });
+
         return html`
             <div class="volume-controls">
-                <paper-icon-button icon="${buttonConfig['volume_down'].icon}" @click="${e => this.volumeCommand(e, 'volume_down')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
-                <paper-icon-button icon="${buttonConfig['volume_up'].icon}" @click="${e => this.volumeCommand(e, 'volume_up')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button style="${styleMap(volumeDownStyle)}" icon="${buttonConfig['volume_down'].icon}" @click="${e => this.volumeCommand(e, 'volume_down')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button style="${styleMap(volumeUpStyle)}" icon="${buttonConfig['volume_up'].icon}" @click="${e => this.volumeCommand(e, 'volume_up')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
                 <paper-slider           
                     @change=${e => this.volumeCommand(e, 'volume_set', { volume_level: e.target.value / 100 })}
                     @click=${e => e.stopPropagation()}
@@ -261,7 +268,7 @@ export class HarmonyCard extends LitElement {
                     ignore-bar-touch pin>
                 </paper-slider>
                 
-                <paper-icon-button icon="${buttonConfig['volume_mute'].icon}" @click="${e => this.volumeCommand(e, 'volume_mute', { is_volume_muted: true })}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <paper-icon-button style="${styleMap(volumeMuteStyle)}" icon="${buttonConfig['volume_mute'].icon}" @click="${e => this.volumeCommand(e, 'volume_mute', { is_volume_muted: true })}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
             </div>`;
     }
 
