@@ -216,12 +216,12 @@ export class HarmonyCard extends LitElement {
         var buttonStyles = Object.assign(styles || {}, { color: buttonConfig.color });
 
         return html`
-            <paper-icon-button 
+            <ha-icon-button 
                 icon="${buttonConfig.icon}" 
                 style="${styleMap(buttonStyles)}"
                 @click="${e => this.deviceCommand(e, buttonConfig.device || device, buttonConfig.command || '')}" 
                 @touchstart="${e => this.preventBubbling(e)}">
-            </paper-icon-button>
+            </ha-icon-button>
         `;
     }
 
@@ -254,8 +254,8 @@ export class HarmonyCard extends LitElement {
 
         return html`
             <div class="volume-controls">
-                <paper-icon-button style="${styleMap(volumeDownStyle)}" icon="${buttonConfig['volume_down'].icon}" @click="${e => this.volumeCommand(e, 'volume_down')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
-                <paper-icon-button style="${styleMap(volumeUpStyle)}" icon="${buttonConfig['volume_up'].icon}" @click="${e => this.volumeCommand(e, 'volume_up')}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <ha-icon-button style="${styleMap(volumeDownStyle)}" icon="${buttonConfig['volume_down'].icon}" @click="${e => this.volumeCommand(e, 'volume_down')}" @touchstart="${e => this.preventBubbling(e)}"></ha-icon-button>
+                <ha-icon-button style="${styleMap(volumeUpStyle)}" icon="${buttonConfig['volume_up'].icon}" @click="${e => this.volumeCommand(e, 'volume_up')}" @touchstart="${e => this.preventBubbling(e)}"></ha-icon-button>
                 <paper-slider           
                     @change=${e => this.volumeCommand(e, 'volume_set', { volume_level: e.target.value / 100 })}
                     @click=${e => e.stopPropagation()}
@@ -267,7 +267,7 @@ export class HarmonyCard extends LitElement {
                     ignore-bar-touch pin>
                 </paper-slider>
                 
-                <paper-icon-button style="${styleMap(volumeMuteStyle)}" icon="${buttonConfig['volume_mute'].icon}" @click="${e => this.volumeCommand(e, 'volume_mute', { is_volume_muted: true })}" @touchstart="${e => this.preventBubbling(e)}"></paper-icon-button>
+                <ha-icon-button style="${styleMap(volumeMuteStyle)}" icon="${buttonConfig['volume_mute'].icon}" @click="${e => this.volumeCommand(e, 'volume_mute', { is_volume_muted: true })}" @touchstart="${e => this.preventBubbling(e)}"></ha-icon-button>
             </div>`;
     }
 
