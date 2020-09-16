@@ -65,7 +65,7 @@ export const DEFAULT_BUTTONS: { [key: string]: HarmonyButtonConfig } = {
     },
     'xbox': {
         command: 'Xbox',
-        icon: 'mdi:xbox',
+        icon: 'mdi:microsoft-xbox',
         hide: false
     },
     'back': {
