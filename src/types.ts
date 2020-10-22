@@ -16,6 +16,7 @@ export interface HarmonyCardConfig {
     hold_action?: ActionConfig;
     double_tap_action?: ActionConfig;
     buttons?: { [key: string]: HarmonyButtonConfig };
+    buttonGrid?: HarmonyButtonGridConfig;
 }
 
 export interface HarmonyActivityConfig {
@@ -31,5 +32,20 @@ export interface HarmonyButtonConfig {
     device?: string;
     icon?: string;
     hide?: boolean;
+    color?: string;
+}
+
+export interface HarmonyButtonGridConfig {
+    rowCount?: number;
+    colCount?: number;
+    buttons: HarmonyButtonGridButtonConfig[];
+}
+
+export interface HarmonyButtonGridButtonConfig {
+    row: number
+    column: number
+    command: string;
+    device: string;
+    icon: string;
     color?: string;
 }
