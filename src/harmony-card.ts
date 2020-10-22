@@ -290,7 +290,10 @@ export class HarmonyCard extends LitElement {
     private computeStyles() {
         var scale = this._config?.scale || 1;
 
-        return styleMap({ '--mmp-unit': `${40 * scale}px` });
+        return styleMap({ 
+            '--mmp-unit': `${40 * scale}px`,
+            '--mdc-icon-size': `${24 * scale}px`
+        });
     }
 
     private computeButtonConfig(config: HarmonyCardConfig, currentActivityConfig?: HarmonyActivityConfig): { [key: string]: HarmonyButtonConfig } {

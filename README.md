@@ -61,7 +61,7 @@ These options let you override the default icon, commands, devices, and visibili
 | ----------------- | ------- | ------------ | ------------------------------------------- | ------------------- |
 | command           | string  | **Optional** | The device command to use                   | See below           |
 | device            | string  | **Optional** | The harmony device name to send the command to   | See below         |
-| icon              | string  | **Optional** | The icon to display for the button          | See below           |
+| icon              | string  | **Optional** | The icon to display for the button (ex. `mdi:` + http://materialdesignicons.com/)         | See below           |
 | hide              | string  | **Optional** | Should this button be hidden                | false               |
 | color             | string  | **Optional** | A css string to represent the color ex. '#ff0000'  |                     |
 
