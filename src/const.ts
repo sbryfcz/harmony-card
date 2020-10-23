@@ -51,12 +51,16 @@ export const DEFAULT_BUTTONS: { [key: string]: HarmonyButtonConfig } = {
     'dpad_left': {
         command: 'DirectionLeft',
         icon: 'mdi:chevron-left-circle',
-        hide: false
+        hide: false,
+        row: 2,
+        column: 1
     },
     'dpad_right': {
         command: 'DirectionRight',
         icon: 'mdi:chevron-right-circle',
-        hide: false
+        hide: false,
+        row: 2,
+        column: 3
     },
     'dpad_center': {
         command: 'OK',

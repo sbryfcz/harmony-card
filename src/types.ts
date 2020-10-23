@@ -33,19 +33,12 @@ export interface HarmonyButtonConfig {
     icon?: string;
     hide?: boolean;
     color?: string;
+    row?: number;
+    column?: number;
 }
 
 export interface HarmonyButtonGridConfig {
-    rowCount?: number;
-    colCount?: number;
-    buttons: HarmonyButtonGridButtonConfig[];
-}
-
-export interface HarmonyButtonGridButtonConfig {
-    row: number
-    column: number
-    command: string;
-    device: string;
-    icon: string;
-    color?: string;
+    rowCount: number;
+    columnCount: number;
+    buttons: HarmonyButtonConfig[];
 }

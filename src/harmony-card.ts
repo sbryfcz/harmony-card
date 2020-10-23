@@ -15,7 +15,7 @@ import sharedStyle from './sharedStyle';
 
 import './editor';
 
-import { HarmonyCardConfig, HarmonyActivityConfig, HarmonyButtonConfig } from './types';
+import { HarmonyCardConfig, HarmonyActivityConfig, HarmonyButtonConfig, HarmonyButtonGridConfig } from './types';
 import { actionHandler } from './action-handler-directive';
 import { CARD_VERSION, DEFAULT_BUTTONS } from './const';
 
@@ -156,6 +156,8 @@ export class HarmonyCard extends LitElement {
 
         var buttonConfig = this.computeButtonConfig(this._config, currentActivityConfig);
 
+        var buttonGrid = this._config.buttonGrid;
+
         return html`
       <ha-card
         style=${this.computeStyles()}
@@ -188,7 +190,7 @@ export class HarmonyCard extends LitElement {
             </div>
 
             <div class="remote">
-                ${this.renderIconButton(buttonConfig['dpad_left'], currentDevice, { 'grid-column': '1', 'grid-row': '2' })}
+                ${this.renderIconButton(buttonConfig['dpad_left'], currentDevice)}
                 ${this.renderIconButton(buttonConfig['dpad_right'], currentDevice, { 'grid-column': '3', 'grid-row': '2' })}
                 ${this.renderIconButton(buttonConfig['dpad_up'], currentDevice, { 'grid-column': '2', 'grid-row': '1' })}
                 ${this.renderIconButton(buttonConfig['dpad_down'], currentDevice, { 'grid-column': '2', 'grid-row': '3' })}
@@ -203,18 +205,35 @@ export class HarmonyCard extends LitElement {
                 ${this.renderIconButton(buttonConfig['x'], currentDevice, { 'grid-column': '6', 'grid-row': '2' })}        
                 ${this.renderIconButton(buttonConfig['y'], currentDevice, { 'grid-column': '7', 'grid-row': '2' })}        
             </div>
+
+            ${this.renderButtonGrid(buttonGrid)}
         </div>
       </ha-card>
     `;
     }
 
-    private renderIconButton(buttonConfig: HarmonyButtonConfig, device?: string, styles?: StyleInfo) {
+    private renderIconButton(buttonConfig: HarmonyButtonConfig, device?: string) {
         if (buttonConfig.hide === true) {
             return html``;
         }
 
+        // setup the styles for the grid location
+        let gridStyles = {};
+        
+        if(buttonConfig.column) {
+            gridStyles['grid-column']=buttonConfig.column;
+        }
+
+        if(buttonConfig.row) {
+            gridStyles['grid-row']=buttonConfig.row;
+        }
+
+        const styles: StyleInfo = gridStyles;
+
+        // setup the styles for the buttons
         var buttonStyles = Object.assign(styles || {}, { color: buttonConfig.color });
 
+        // render the button with the configuration
         return html`
             <ha-icon-button 
                 icon="${buttonConfig.icon}" 
@@ -222,6 +241,32 @@ export class HarmonyCard extends LitElement {
                 @click="${e => this.deviceCommand(e, buttonConfig.device || device, buttonConfig.command || '')}" 
                 @touchstart="${e => this.preventBubbling(e)}">
             </ha-icon-button>
+        `;
+    }
+
+    private renderButtonGrid(buttonGrid?: HarmonyButtonGridConfig, device?: string) {
+        if(null == buttonGrid) {
+            return html``;
+        }
+
+        const columnDefintion = 'auto '.repeat(buttonGrid.columnCount);
+        const rowDefintion = 'auto '.repeat(buttonGrid.rowCount);
+
+        const gridStyle = {
+            'display': 'grid',
+            'grid-template-columns': columnDefintion,
+            'grid-template-rows': rowDefintion,
+            'align-items': 'center',
+            'justify-content': 'center',
+            'text-align': 'center'
+        };
+
+        return html`
+            <div class="custom-button-grid" style="${styleMap(gridStyle)}">
+            ${buttonGrid.buttons.map(button => html`
+                ${this.renderIconButton(button, device)}
+            `);
+            </div>
         `;
     }
 
