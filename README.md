@@ -25,7 +25,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | entity            | string  | **Required** | Home Assistant entity ID of Harmony         |                     |
 | volume_entity     | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
 | volume_device     | string  | **Optional** | Harmony device name to control volume       |                     |
-| hide_keyPad       | boolean | **Optional** | Hides the KeyPad                            | `false`             |
+| hide_keyPad       | boolean | **Optional** | Hides the KeyPad                            | `true`              |
 | activites         | Activity| **Required** | List of Activities (see below)              |                     |
 | scale             | number  | **Optional** | A multiplier to scale the icons by          | 1                   |
 | buttons           | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
@@ -42,7 +42,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | device             | string  | **Required**  | The name of the harmony device as named in the harmony config to use for sending commands | |
 | volume_entity      | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
 | volume_device      | string  | **Optional** | Harmony device name to control volume       |                     |
-| hide_keyPad        | boolean | **Optional** | Hides the KeyPad                            |                     |
+| hide_keyPad        | boolean | **Optional** | Hides the KeyPad                            | `true`              |
 | buttons            | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
 ## Action Options
 
