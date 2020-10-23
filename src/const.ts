@@ -1,6 +1,6 @@
 import { HarmonyButtonConfig } from "./types";
 
-export const CARD_VERSION = '0.12.0';
+export const CARD_VERSION = '0.13.0';
 
 export const DEFAULT_BUTTONS: { [key: string]: HarmonyButtonConfig } = {
     '0': {
