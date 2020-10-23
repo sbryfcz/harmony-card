@@ -180,6 +180,8 @@ export class HarmonyCard extends LitElement {
 
             ${this.renderVolumeControls(this.hass, this._config, buttonConfig, currentActivityConfig)}
 
+            ${this.renderKeyPad(this._config, buttonConfig, currentActivityConfig, currentDevice)}
+
             <div class="play-pause">
                 ${this.renderIconButton(buttonConfig['skip_back'], currentDevice)}
                 ${this.renderIconButton(buttonConfig['play'], currentDevice)}
@@ -206,6 +208,34 @@ export class HarmonyCard extends LitElement {
         </div>
       </ha-card>
     `;
+    }
+
+    private renderKeyPad(config: HarmonyCardConfig, buttonConfig: { [key: string]: HarmonyButtonConfig }, currentActivityConfig: HarmonyActivityConfig | undefined, device?: string) {
+        if (typeof currentActivityConfig?.hide_keyPad != 'undefined' && !currentActivityConfig?.hide_keyPad) {
+            return this.renderKeyPadButton(buttonConfig, device);
+        }
+        else if (typeof config.hide_keyPad != 'undefined' && !config.hide_keyPad) {
+            return this.renderKeyPadButton(buttonConfig, device);
+        }
+
+        return html``;
+    }
+
+    private renderKeyPadButton(buttonConfig: { [key: string]: HarmonyButtonConfig }, device?: string) {
+        return html`
+        <div class="remote">
+            ${this.renderIconButton(buttonConfig['1'], device, { 'grid-column': '1', 'grid-row': '1' })}
+            ${this.renderIconButton(buttonConfig['2'], device, { 'grid-column': '2', 'grid-row': '1' })}
+            ${this.renderIconButton(buttonConfig['3'], device, { 'grid-column': '3', 'grid-row': '1' })}
+            ${this.renderIconButton(buttonConfig['4'], device, { 'grid-column': '1', 'grid-row': '2' })}
+            ${this.renderIconButton(buttonConfig['5'], device, { 'grid-column': '2', 'grid-row': '2' })}    
+            ${this.renderIconButton(buttonConfig['6'], device, { 'grid-column': '3', 'grid-row': '2' })}
+            ${this.renderIconButton(buttonConfig['7'], device, { 'grid-column': '1', 'grid-row': '3' })}    
+            ${this.renderIconButton(buttonConfig['8'], device, { 'grid-column': '2', 'grid-row': '3' })}
+            ${this.renderIconButton(buttonConfig['9'], device, { 'grid-column': '3', 'grid-row': '3' })}
+            ${this.renderIconButton(buttonConfig['0'], device, { 'grid-column': '2', 'grid-row': '4' })}
+        </div> 
+        `;
     }
 
     private renderIconButton(buttonConfig: HarmonyButtonConfig, device?: string, styles?: StyleInfo) {

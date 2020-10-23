@@ -3,6 +3,57 @@ import { HarmonyButtonConfig } from "./types";
 export const CARD_VERSION = '0.12.0';
 
 export const DEFAULT_BUTTONS: { [key: string]: HarmonyButtonConfig } = {
+    '0': {
+        command: '0',
+        icon: 'mdi:numeric-0-circle',
+        hide: false
+    },
+    '1': {
+        command: '1',
+        icon: 'mdi:numeric-1-circle',
+        hide: false
+    },
+    '2': {
+        command: '2',
+        icon: 'mdi:numeric-2-circle',
+        hide: false
+    },
+    '3': {
+        command: '3',
+        icon: 'mdi:numeric-3-circle',
+        hide: false
+    },
+    '4': {
+        command: '4',
+        icon: 'mdi:numeric-4-circle',
+        hide: false
+    },
+    '5': {
+        command: '5',
+        icon: 'mdi:numeric-5-circle',
+        hide: false
+    },
+    '6': {
+        command: '6',
+        icon: 'mdi:numeric-6-circle',
+        hide: false
+    },
+    '7': {
+        command: '7',
+        icon: 'mdi:numeric-7-circle',
+        hide: false
+    },
+    '8': {
+        command: '8',
+        icon: 'mdi:numeric-8-circle',
+        hide: false
+    },
+    '9': {
+        command: '9',
+        icon: 'mdi:numeric-9-circle',
+        hide: false
+    },
+
     'volume_down': {
         command: 'VolumeDown',
         icon: 'mdi:volume-medium',
