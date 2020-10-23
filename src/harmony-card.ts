@@ -211,10 +211,10 @@ export class HarmonyCard extends LitElement {
     }
 
     private renderKeyPad(config: HarmonyCardConfig, buttonConfig: { [key: string]: HarmonyButtonConfig }, currentActivityConfig: HarmonyActivityConfig | undefined, device?: string) {
-        if (!currentActivityConfig?.hide_keyPad) {
+        if (typeof currentActivityConfig?.hide_keyPad != 'undefined' && !currentActivityConfig?.hide_keyPad) {
             return this.renderKeyPadButton(buttonConfig, device);
         }
-        else if (!config.hide_keyPad) {
+        else if (typeof config.hide_keyPad != 'undefined' && !config.hide_keyPad) {
             return this.renderKeyPadButton(buttonConfig, device);
         }
 
