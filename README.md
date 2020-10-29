@@ -25,6 +25,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | entity            | string  | **Required** | Home Assistant entity ID of Harmony         |                     |
 | volume_entity     | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
 | volume_device     | string  | **Optional** | Harmony device name to control volume       |                     |
+| hide_keyPad       | boolean | **Optional** | Hides the KeyPad                            | `true`              |
 | activites         | Activity| **Required** | List of Activities (see below)              |                     |
 | scale             | number  | **Optional** | A multiplier to scale the icons by          | 1                   |
 | buttons           | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
@@ -41,6 +42,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | device             | string  | **Required**  | The name of the harmony device as named in the harmony config to use for sending commands | |
 | volume_entity      | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
 | volume_device      | string  | **Optional** | Harmony device name to control volume       |                     |
+| hide_keyPad        | boolean | **Optional** | Hides the KeyPad                            | `true`              |
 | buttons            | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
 ## Action Options
 
@@ -67,6 +69,46 @@ These options let you override the default icon, commands, devices, and visibili
 
 Buttons Available to Configure with Defaults:
 ```yaml
+0:
+    command: '0',
+    icon: 'mdi:numeric-0-circle',
+    hide: false
+1:
+    command: '1',
+    icon: 'mdi:numeric-1-circle',
+    hide: false
+2:
+    command: '2',
+    icon: 'mdi:numeric-2-circle',
+    hide: false
+3:
+    command: '3',
+    icon: 'mdi:numeric-3-circle',
+    hide: false
+4:
+    command: '4',
+    icon: 'mdi:numeric-4-circle',
+    hide: false
+5:
+    command: '5',
+    icon: 'mdi:numeric-5-circle',
+    hide: false
+6:
+    command: '6',
+    icon: 'mdi:numeric-6-circle',
+    hide: false
+7:
+    command: '7',
+    icon: 'mdi:numeric-7-circle',
+    hide: false
+8:
+    command: '8',
+    icon: 'mdi:numeric-8-circle',
+    hide: false
+9:
+    command: '9',
+    icon: 'mdi:numeric-9-circle',
+    hide: false
 volume_down:
     command: 'VolumeDown',
     icon: 'mdi:volume-medium',
