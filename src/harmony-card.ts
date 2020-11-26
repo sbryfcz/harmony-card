@@ -77,6 +77,7 @@ export class HarmonyCard extends LitElement {
             return;
         }
 
+        // eslint-disable-next-line prettier/prettier
         this.hass?.callService("remote", "send_command", { entity_id: this._config?.entity, command: cmd, device: device });
     }
 
@@ -96,7 +97,7 @@ export class HarmonyCard extends LitElement {
 
         if (this._config?.volume_entity) {
 
-            var baseAttributes = { entity_id: this._config?.volume_entity };
+            const baseAttributes = { entity_id: this._config?.volume_entity };
 
             this.hass?.callService("media_player", command, Object.assign(baseAttributes, attributes || {}));
         }
@@ -146,15 +147,15 @@ export class HarmonyCard extends LitElement {
       `;
         }
 
-        var hubState = this.hass.states[this._config.entity];
+        const hubState = this.hass.states[this._config.entity];
 
-        var hubPowerState = hubState.state;
-        var currentActivity = hubState.attributes.current_activity;
+        const hubPowerState = hubState.state;
+        const currentActivity = hubState.attributes.current_activity;
 
-        var currentActivityConfig = this._config.activities.find(activity => activity.name === currentActivity);
-        var currentDevice = currentActivityConfig?.device;
+        const currentActivityConfig = this._config.activities.find(activity => activity.name === currentActivity);
+        const currentDevice = currentActivityConfig?.device;
 
-        var buttonConfig = this.computeButtonConfig(this._config, currentActivityConfig);
+        const buttonConfig = this.computeButtonConfig(this._config, currentActivityConfig);
 
         return html`
       <ha-card
@@ -169,13 +170,7 @@ export class HarmonyCard extends LitElement {
         aria-label=${`Harmony: ${this._config.entity}`}
       >
         <div class="card-content">
-            <div class="activities">
-                <mwc-button ?outlined="${hubPowerState === "off"}" label="Off" @click="${e => this.harmonyCommand(e, 'turn_off')}" @touchstart="${e => this.preventBubbling(e)}"></mwc-button>
-                
-                ${this._config.activities.map(activity => html`
-                    <mwc-button ?outlined="${currentActivity === activity.name}" label=${activity.name} @click="${e => this.harmonyCommand(e, activity.name)}" @touchstart="${e => this.preventBubbling(e)}"></mwc-button>
-                `)}
-            </div>
+            ${this.renderActivityButtons(this._config, hubPowerState, currentActivity)}
 
             ${this.renderVolumeControls(this.hass, this._config, buttonConfig, currentActivityConfig)}
 
@@ -207,6 +202,45 @@ export class HarmonyCard extends LitElement {
         </div>
       </ha-card>
     `;
+    }
+
+    private renderActivityButtons(config: HarmonyCardConfig, hubPowerState: string, currentActivity: string) {
+        const iconClass = config.show_activities_icons ? 'activities-icons' : '';
+        return html`
+        <div class="activities ${iconClass}">
+            ${this.renderActivityButton(hubPowerState === 'off', 'turn_off', config.show_activities_icons, 'mdi:power')}
+            ${config.activities.map(
+              activity => html`
+                ${this.renderActivityButton(
+                currentActivity === activity.name,
+                activity.name,
+                config.show_activities_icons,
+                activity.icon,
+              )}
+              `,
+            )}
+        </div>
+    `;
+    }
+
+    private renderActivityButton(outlined: boolean, command: string, showIcon = false, icon?: string,): TemplateResult {
+        return html`
+           ${showIcon
+              ? html`
+              <ha-icon-button
+                icon="${icon}"
+                ?outlined="${outlined}"
+                @click="${e => this.harmonyCommand(e, command)}"
+                @touchstart="${e => this.preventBubbling(e)}"
+              ></ha-icon-button>
+              ` : `
+              <mwc-button
+                ?outlined="${outlined}"
+                @click="${e => this.harmonyCommand(e, command)}"
+                @touchstart="${e => this.preventBubbling(e)}"
+                ></mwc-button>        
+            `}
+        `;
     }
 
     private renderKeyPad(config: HarmonyCardConfig, buttonConfig: { [key: string]: HarmonyButtonConfig }, currentActivityConfig: HarmonyActivityConfig | undefined, device?: string) {
@@ -242,7 +276,7 @@ export class HarmonyCard extends LitElement {
             return html``;
         }
 
-        var buttonStyles = Object.assign(styles || {}, { color: buttonConfig.color });
+        const buttonStyles = Object.assign(styles || {}, { color: buttonConfig.color });
 
         return html`
             <ha-icon-button 
@@ -272,14 +306,14 @@ export class HarmonyCard extends LitElement {
     }
 
     private renderMediaPlayerVolumeControls(hass: HomeAssistant, volumeMediaPlayer: string, buttonConfig: { [key: string]: HarmonyButtonConfig }) {
-        var volume_state = hass.states[volumeMediaPlayer];
+        const volume_state = hass.states[volumeMediaPlayer];
 
-        var volume = volume_state.attributes.volume_level;
-        var muted = volume_state.attributes.is_volume_muted;
+        const volume = volume_state.attributes.volume_level;
+        const muted = volume_state.attributes.is_volume_muted;
 
-        var volumeDownStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_down'].color });
-        var volumeUpStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_up'].color });
-        var volumeMuteStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_mute'].color });
+        const volumeDownStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_down'].color });
+        const volumeUpStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_up'].color });
+        const volumeMuteStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_mute'].color });
 
         return html`
             <div class="volume-controls">
@@ -317,9 +351,9 @@ export class HarmonyCard extends LitElement {
     }
 
     private computeStyles() {
-        var scale = this._config?.scale || 1;
+        const scale = this._config?.scale || 1;
 
-        return styleMap({ 
+        return styleMap({
             '--mmp-unit': `${40 * scale}px`,
             '--mdc-icon-size': `${24 * scale}px`
         });

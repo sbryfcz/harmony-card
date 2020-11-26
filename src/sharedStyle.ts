@@ -21,21 +21,24 @@ const sharedStyle = css`
     margin: 0 8px;
   }
   ha-icon {
-    width: calc(var(--mmp-unit) * .6);
-    height: calc(var(--mmp-unit) * .6);
+    width: calc(var(--mmp-unit) * 0.6);
+    height: calc(var(--mmp-unit) * 0.6);
   }
   ha-icon-button {
     width: var(--mmp-unit);
     height: var(--mmp-unit);
     color: var(--mmp-text-color, var(--primary-text-color));
-    transition: color .25s;
+    transition: color 0.25s;
   }
   ha-icon-button[color] {
     color: var(--mmp-accent-color, var(--accent-color)) !important;
     opacity: 1 !important;
   }
   ha-icon-button[inactive] {
-    opacity: .5;
+    opacity: 0.5;
+  }
+  ha-icon-button[outlined] {
+    color: var(--accent-color) !important;
   }
 
   .play-pause {
@@ -45,21 +48,23 @@ const sharedStyle = css`
   }
 
   .activities {
-      display: flex;
-      flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
   }
-
-  .activities>mwc-button:not(:first-child) {
+  .activities-icons {
+    justify-content: space-evenly;
+  }
+  .activities > mwc-button:not(:first-child) {
     flex-grow: 1;
   }
 
   .remote {
-      display: grid;
-      grid-template-columns: auto auto auto;
-      grid-template-rows: auto auto auto;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   .xbox-buttons {
@@ -71,11 +76,11 @@ const sharedStyle = css`
   }
 
   .volume-controls {
-      display: flex;
-      justify-content: center;
+    display: flex;
+    justify-content: center;
   }
 
-  .volume-controls>paper-slider {
+  .volume-controls > paper-slider {
     flex: 1;
   }
 `;
