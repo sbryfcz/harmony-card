@@ -80,7 +80,7 @@ const sharedStyle = css`
       justify-content: center;
   }
 
-  .volume-controls > paper-slider {
+  .volume-controls>paper-slider {
     flex: 1;
   }
 `;
