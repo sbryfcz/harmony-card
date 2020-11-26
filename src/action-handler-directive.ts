@@ -45,13 +45,13 @@ class ActionHandler extends HTMLElement implements ActionHandler {
 
         ['touchcancel', 'mouseout', 'mouseup', 'touchmove', 'mousewheel', 'wheel', 'scroll'].forEach(ev => {
             document.addEventListener(
-              ev,
-              () => {
-                  clearTimeout(this.timer);
-                  this.stopAnimation();
-                  this.timer = undefined;
-              },
-              { passive: true },
+                ev,
+                () => {
+                    clearTimeout(this.timer);
+                    this.stopAnimation();
+                    this.timer = undefined;
+                },
+                { passive: true },
             );
         });
     }

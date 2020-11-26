@@ -54,7 +54,7 @@ const sharedStyle = css`
   .activities-icons {
     justify-content: space-evenly;
   }
-  .activities > mwc-button:not(:first-child) {
+  .activities>mwc-button:not(:first-child) {
     flex-grow: 1;
   }
 
