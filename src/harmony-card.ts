@@ -77,7 +77,6 @@ export class HarmonyCard extends LitElement {
             return;
         }
 
-        // eslint-disable-next-line prettier/prettier
         this.hass?.callService("remote", "send_command", { entity_id: this._config?.entity, command: cmd, device: device });
     }
 
@@ -97,7 +96,7 @@ export class HarmonyCard extends LitElement {
 
         if (this._config?.volume_entity) {
 
-            const baseAttributes = { entity_id: this._config?.volume_entity };
+            var baseAttributes = { entity_id: this._config?.volume_entity };
 
             this.hass?.callService("media_player", command, Object.assign(baseAttributes, attributes || {}));
         }
@@ -147,15 +146,15 @@ export class HarmonyCard extends LitElement {
       `;
         }
 
-        const hubState = this.hass.states[this._config.entity];
+        var hubState = this.hass.states[this._config.entity];
 
-        const hubPowerState = hubState.state;
-        const currentActivity = hubState.attributes.current_activity;
+        var hubPowerState = hubState.state;
+        var currentActivity = hubState.attributes.current_activity;
 
-        const currentActivityConfig = this._config.activities.find(activity => activity.name === currentActivity);
-        const currentDevice = currentActivityConfig?.device;
+        var currentActivityConfig = this._config.activities.find(activity => activity.name === currentActivity);
+        var currentDevice = currentActivityConfig?.device;
 
-        const buttonConfig = this.computeButtonConfig(this._config, currentActivityConfig);
+        var buttonConfig = this.computeButtonConfig(this._config, currentActivityConfig);
 
         return html`
       <ha-card
@@ -223,7 +222,7 @@ export class HarmonyCard extends LitElement {
     `;
     }
 
-    private renderActivityButton(outlined: boolean, command: string, showIcon = false, icon?: string,): TemplateResult {
+    private renderActivityButton(outlined: boolean, command: string, showIcon: boolean = false, icon?: string,): TemplateResult {
         return html`
            ${showIcon
               ? html`
@@ -233,12 +232,13 @@ export class HarmonyCard extends LitElement {
                 @click="${e => this.harmonyCommand(e, command)}"
                 @touchstart="${e => this.preventBubbling(e)}"
               ></ha-icon-button>
-              ` : `
+            `
+             : `
               <mwc-button
                 ?outlined="${outlined}"
                 @click="${e => this.harmonyCommand(e, command)}"
                 @touchstart="${e => this.preventBubbling(e)}"
-                ></mwc-button>        
+              ></mwc-button>        
             `}
         `;
     }
@@ -276,7 +276,7 @@ export class HarmonyCard extends LitElement {
             return html``;
         }
 
-        const buttonStyles = Object.assign(styles || {}, { color: buttonConfig.color });
+        var buttonStyles = Object.assign(styles || {}, { color: buttonConfig.color });
 
         return html`
             <ha-icon-button 
@@ -306,14 +306,14 @@ export class HarmonyCard extends LitElement {
     }
 
     private renderMediaPlayerVolumeControls(hass: HomeAssistant, volumeMediaPlayer: string, buttonConfig: { [key: string]: HarmonyButtonConfig }) {
-        const volume_state = hass.states[volumeMediaPlayer];
+        var volume_state = hass.states[volumeMediaPlayer];
 
-        const volume = volume_state.attributes.volume_level;
-        const muted = volume_state.attributes.is_volume_muted;
+        var volume = volume_state.attributes.volume_level;
+        var muted = volume_state.attributes.is_volume_muted;
 
-        const volumeDownStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_down'].color });
-        const volumeUpStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_up'].color });
-        const volumeMuteStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_mute'].color });
+        var volumeDownStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_down'].color });
+        var volumeUpStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_up'].color });
+        var volumeMuteStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_mute'].color });
 
         return html`
             <div class="volume-controls">
@@ -351,7 +351,7 @@ export class HarmonyCard extends LitElement {
     }
 
     private computeStyles() {
-        const scale = this._config?.scale || 1;
+        var scale = this._config?.scale || 1;
 
         return styleMap({
             '--mmp-unit': `${40 * scale}px`,
