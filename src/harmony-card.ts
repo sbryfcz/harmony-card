@@ -204,6 +204,9 @@ export class HarmonyCard extends LitElement {
     }
 
     private renderActivityButtons(config: HarmonyCardConfig, hubPowerState: string, currentActivity: string) {
+        if (typeof config.hide_activities !== 'undefined' && config.hide_activities) {
+            return html``;
+        }
         const iconClass = config.show_activities_icons ? 'activities-icons' : '';
         return html`
         <div class="activities ${iconClass}">

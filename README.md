@@ -28,6 +28,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | hide_keyPad       | boolean | **Optional** | Hides the KeyPad                            | `true`              |
 | activites         | Activity| **Required** | List of Activities (see below)              |                     |
 | show_activities_icons | boolean  | **Optional** | Show activity buttons as icons         | `false`             |
+| hide_activities | boolean  | **Optional** | Hide activities                              | `false`             |
 | scale             | number  | **Optional** | A multiplier to scale the icons by          | 1                   |
 | buttons           | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
 | tap_action        | object  | **Optional** | Action to take on tap                       | `action: more-info` |

@@ -9,6 +9,7 @@ export interface HarmonyCardConfig {
     hide_keyPad?: boolean;
     activities: HarmonyActivityConfig[];
     show_activities_icons?: boolean;
+    hide_activities?: boolean;
     scale?: number;
     name?: string;
     show_warning?: boolean;
