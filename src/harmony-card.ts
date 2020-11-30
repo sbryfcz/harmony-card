@@ -225,7 +225,7 @@ export class HarmonyCard extends LitElement {
 
     private renderActivityButton(outlined: boolean, command: string, label: string, showIcon = false, icon?: string,): TemplateResult {
         return html`
-           ${showIcon
+           ${showIcon && icon
               ? html`
               <ha-icon-button
                 icon="${icon}"
