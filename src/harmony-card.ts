@@ -207,11 +207,12 @@ export class HarmonyCard extends LitElement {
         const iconClass = config.show_activities_icons ? 'activities-icons' : '';
         return html`
         <div class="activities ${iconClass}">
-            ${this.renderActivityButton(hubPowerState === 'off', 'turn_off', config.show_activities_icons, 'mdi:power')}
+            ${this.renderActivityButton(hubPowerState === 'off', 'turn_off', 'off', config.show_activities_icons, 'mdi:power')}
             ${config.activities.map(
               activity => html`
                 ${this.renderActivityButton(
                 currentActivity === activity.name,
+                activity.name,
                 activity.name,
                 config.show_activities_icons,
                 activity.icon,
@@ -222,7 +223,7 @@ export class HarmonyCard extends LitElement {
     `;
     }
 
-    private renderActivityButton(outlined: boolean, command: string, showIcon: boolean = false, icon?: string,): TemplateResult {
+    private renderActivityButton(outlined: boolean, command: string, label: string, showIcon = false, icon?: string,): TemplateResult {
         return html`
            ${showIcon
               ? html`
@@ -233,9 +234,10 @@ export class HarmonyCard extends LitElement {
                 @touchstart="${e => this.preventBubbling(e)}"
               ></ha-icon-button>
             `
-             : `
+             : html`
               <mwc-button
                 ?outlined="${outlined}"
+                label="${label}"
                 @click="${e => this.harmonyCommand(e, command)}"
                 @touchstart="${e => this.preventBubbling(e)}"
               ></mwc-button>        
