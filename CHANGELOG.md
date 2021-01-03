@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.14.0] - 2021-01-03
+ 
+### Added
+- In root options there is an option show_activities_icons added, when set to true it will use icons on all activity buttons [@mattieha]
+- In the Activity Options there is a an option icon added, where you define the icon for hte activity. [@mattieha]
+- In the root options there is an option hide_activities added, when set to true it will hide the activities row. [@mattieha]
+
+### Changed
+
 ## [0.13.1] - 2020-10-23
  
 ### Added
