@@ -27,6 +27,8 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | volume_device     | string  | **Optional** | Harmony device name to control volume       |                     |
 | hide_keyPad       | boolean | **Optional** | Hides the KeyPad                            | `true`              |
 | activites         | Activity| **Required** | List of Activities (see below)              |                     |
+| show_activities_icons | boolean  | **Optional** | Show activity buttons as icons         | `false`             |
+| hide_activities | boolean  | **Optional** | Hide activities                              | `false`             |
 | scale             | number  | **Optional** | A multiplier to scale the icons by          | 1                   |
 | buttons           | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
 | tap_action        | object  | **Optional** | Action to take on tap                       | `action: more-info` |
@@ -40,6 +42,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | ------------------ | ------- | ------------- | -------------------------------- | ------- |
 | name               | string  | **Required**  | The name of the harmony activity as named in the harmony config | |
 | device             | string  | **Required**  | The name of the harmony device as named in the harmony config to use for sending commands | |
+| icon               | string  | **Optional** | The icon to display for the button (ex. `mdi:` + http://materialdesignicons.com/)|          |
 | volume_entity      | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
 | volume_device      | string  | **Optional** | Harmony device name to control volume       |                     |
 | hide_keyPad        | boolean | **Optional** | Hides the KeyPad                            | `true`              |

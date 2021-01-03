@@ -169,13 +169,7 @@ export class HarmonyCard extends LitElement {
         aria-label=${`Harmony: ${this._config.entity}`}
       >
         <div class="card-content">
-            <div class="activities">
-                <mwc-button ?outlined="${hubPowerState === "off"}" label="Off" @click="${e => this.harmonyCommand(e, 'turn_off')}" @touchstart="${e => this.preventBubbling(e)}"></mwc-button>
-                
-                ${this._config.activities.map(activity => html`
-                    <mwc-button ?outlined="${currentActivity === activity.name}" label=${activity.name} @click="${e => this.harmonyCommand(e, activity.name)}" @touchstart="${e => this.preventBubbling(e)}"></mwc-button>
-                `)}
-            </div>
+            ${this.renderActivityButtons(this._config, hubPowerState, currentActivity)}
 
             ${this.renderVolumeControls(this.hass, this._config, buttonConfig, currentActivityConfig)}
 
@@ -207,6 +201,51 @@ export class HarmonyCard extends LitElement {
         </div>
       </ha-card>
     `;
+    }
+
+    private renderActivityButtons(config: HarmonyCardConfig, hubPowerState: string, currentActivity: string) {
+        if (typeof config.hide_activities !== 'undefined' && config.hide_activities) {
+            return html``;
+        }
+        const iconClass = config.show_activities_icons ? 'activities-icons' : '';
+        return html`
+        <div class="activities ${iconClass}">
+            ${this.renderActivityButton(hubPowerState === 'off', 'turn_off', 'off', config.show_activities_icons, 'mdi:power')}
+            ${config.activities.map(
+              activity => html`
+                ${this.renderActivityButton(
+                currentActivity === activity.name,
+                activity.name,
+                activity.name,
+                config.show_activities_icons,
+                activity.icon,
+              )}
+              `,
+            )}
+        </div>
+    `;
+    }
+
+    private renderActivityButton(outlined: boolean, command: string, label: string, showIcon = false, icon?: string,): TemplateResult {
+        return html`
+           ${showIcon && icon
+              ? html`
+              <ha-icon-button
+                icon="${icon}"
+                ?outlined="${outlined}"
+                @click="${e => this.harmonyCommand(e, command)}"
+                @touchstart="${e => this.preventBubbling(e)}"
+              ></ha-icon-button>
+            `
+             : html`
+              <mwc-button
+                ?outlined="${outlined}"
+                label="${label}"
+                @click="${e => this.harmonyCommand(e, command)}"
+                @touchstart="${e => this.preventBubbling(e)}"
+              ></mwc-button>        
+            `}
+        `;
     }
 
     private renderKeyPad(config: HarmonyCardConfig, buttonConfig: { [key: string]: HarmonyButtonConfig }, currentActivityConfig: HarmonyActivityConfig | undefined, device?: string) {
@@ -319,7 +358,7 @@ export class HarmonyCard extends LitElement {
     private computeStyles() {
         var scale = this._config?.scale || 1;
 
-        return styleMap({ 
+        return styleMap({
             '--mmp-unit': `${40 * scale}px`,
             '--mdc-icon-size': `${24 * scale}px`
         });

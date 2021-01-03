@@ -8,6 +8,8 @@ export interface HarmonyCardConfig {
     volume_device?: string;
     hide_keyPad?: boolean;
     activities: HarmonyActivityConfig[];
+    show_activities_icons?: boolean;
+    hide_activities?: boolean;
     scale?: number;
     name?: string;
     show_warning?: boolean;
@@ -22,6 +24,7 @@ export interface HarmonyCardConfig {
 export interface HarmonyActivityConfig {
     name: string;
     device: string;
+    icon?: string;
     volume_entity?: string;
     volume_device?: string;
     hide_keyPad?: boolean;

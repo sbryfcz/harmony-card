@@ -37,6 +37,9 @@ const sharedStyle = css`
   ha-icon-button[inactive] {
     opacity: .5;
   }
+  ha-icon-button[outlined] {
+    color: var(--accent-color) !important;
+  }
 
   .play-pause {
     display: flex;
@@ -48,7 +51,9 @@ const sharedStyle = css`
       display: flex;
       flex-wrap: wrap;
   }
-
+  .activities-icons {
+    justify-content: space-evenly;
+  }
   .activities>mwc-button:not(:first-child) {
     flex-grow: 1;
   }
