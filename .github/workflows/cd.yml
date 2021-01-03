@@ -29,7 +29,12 @@ jobs:
 
       - name: Build
         run: npm run build
-        
+      
+      - name: Delete Draft Releases
+        uses: hugo19941994/delete-draft-releases@v0.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # Drafts your next Release notes as Pull Requests are merged into "master"
       - name: Draft Release
         id: draft_release
