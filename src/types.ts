@@ -27,6 +27,7 @@ export interface HarmonyActivityConfig {
     volume_device?: string;
     hide_keyPad?: boolean;
     buttons?: { [key: string]: HarmonyButtonConfig };
+    buttonGrid?: HarmonyButtonGridConfig;
 }
 
 export interface HarmonyButtonConfig {

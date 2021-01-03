@@ -156,7 +156,8 @@ export class HarmonyCard extends LitElement {
 
         var buttonConfig = this.computeButtonConfig(this._config, currentActivityConfig);
 
-        var buttonGrid = this._config.buttonGrid;
+        // use the acttivity button grid if one exists, otherwise use the card level one
+        let buttonGrid = currentActivityConfig?.buttonGrid || this._config.buttonGrid;
 
         return html`
       <ha-card
@@ -192,19 +193,19 @@ export class HarmonyCard extends LitElement {
 
             <div class="remote">
                 ${this.renderIconButton(buttonConfig['dpad_left'], currentDevice)}
-                ${this.renderIconButton(buttonConfig['dpad_right'], currentDevice, { 'grid-column': '3', 'grid-row': '2' })}
-                ${this.renderIconButton(buttonConfig['dpad_up'], currentDevice, { 'grid-column': '2', 'grid-row': '1' })}
-                ${this.renderIconButton(buttonConfig['dpad_down'], currentDevice, { 'grid-column': '2', 'grid-row': '3' })}
-                ${this.renderIconButton(buttonConfig['dpad_center'], currentDevice, { 'grid-column': '2', 'grid-row': '2' })}        
+                ${this.renderIconButton(buttonConfig['dpad_right'], currentDevice)}
+                ${this.renderIconButton(buttonConfig['dpad_up'], currentDevice)}
+                ${this.renderIconButton(buttonConfig['dpad_down'], currentDevice)}
+                ${this.renderIconButton(buttonConfig['dpad_center'], currentDevice)}        
             </div>        
 
             <div class="xbox-buttons">
-                ${this.renderIconButton(buttonConfig['xbox'], currentDevice, { 'grid-column': '1', 'grid-row': '2' })}
-                ${this.renderIconButton(buttonConfig['back'], currentDevice, { 'grid-column': '2', 'grid-row': '2' })}
-                ${this.renderIconButton(buttonConfig['a'], currentDevice, { 'grid-column': '4', 'grid-row': '2' })}
-                ${this.renderIconButton(buttonConfig['b'], currentDevice, { 'grid-column': '5', 'grid-row': '2' })}
-                ${this.renderIconButton(buttonConfig['x'], currentDevice, { 'grid-column': '6', 'grid-row': '2' })}        
-                ${this.renderIconButton(buttonConfig['y'], currentDevice, { 'grid-column': '7', 'grid-row': '2' })}        
+                ${this.renderIconButton(buttonConfig['xbox'], currentDevice)}
+                ${this.renderIconButton(buttonConfig['back'], currentDevice)}
+                ${this.renderIconButton(buttonConfig['a'], currentDevice)}
+                ${this.renderIconButton(buttonConfig['b'], currentDevice)}
+                ${this.renderIconButton(buttonConfig['x'], currentDevice)}        
+                ${this.renderIconButton(buttonConfig['y'], currentDevice)}        
             </div>
 
             ${this.renderButtonGrid(buttonGrid)}
@@ -227,16 +228,16 @@ export class HarmonyCard extends LitElement {
     private renderKeyPadButton(buttonConfig: { [key: string]: HarmonyButtonConfig }, device?: string) {
         return html`
         <div class="remote">
-            ${this.renderIconButton(buttonConfig['1'], device, { 'grid-column': '1', 'grid-row': '1' })}
-            ${this.renderIconButton(buttonConfig['2'], device, { 'grid-column': '2', 'grid-row': '1' })}
-            ${this.renderIconButton(buttonConfig['3'], device, { 'grid-column': '3', 'grid-row': '1' })}
-            ${this.renderIconButton(buttonConfig['4'], device, { 'grid-column': '1', 'grid-row': '2' })}
-            ${this.renderIconButton(buttonConfig['5'], device, { 'grid-column': '2', 'grid-row': '2' })}    
-            ${this.renderIconButton(buttonConfig['6'], device, { 'grid-column': '3', 'grid-row': '2' })}
-            ${this.renderIconButton(buttonConfig['7'], device, { 'grid-column': '1', 'grid-row': '3' })}    
-            ${this.renderIconButton(buttonConfig['8'], device, { 'grid-column': '2', 'grid-row': '3' })}
-            ${this.renderIconButton(buttonConfig['9'], device, { 'grid-column': '3', 'grid-row': '3' })}
-            ${this.renderIconButton(buttonConfig['0'], device, { 'grid-column': '2', 'grid-row': '4' })}
+            ${this.renderIconButton(buttonConfig['1'], device)}
+            ${this.renderIconButton(buttonConfig['2'], device)}
+            ${this.renderIconButton(buttonConfig['3'], device)}
+            ${this.renderIconButton(buttonConfig['4'], device)}
+            ${this.renderIconButton(buttonConfig['5'], device)}    
+            ${this.renderIconButton(buttonConfig['6'], device)}
+            ${this.renderIconButton(buttonConfig['7'], device)}    
+            ${this.renderIconButton(buttonConfig['8'], device)}
+            ${this.renderIconButton(buttonConfig['9'], device)}
+            ${this.renderIconButton(buttonConfig['0'], device)}
         </div> 
         `;
     }
@@ -298,13 +299,11 @@ export class HarmonyCard extends LitElement {
     }
 
     private renderGridButtons(buttonGrid?: HarmonyButtonGridConfig, device?: string) {
-        if(null == buttonGrid) {
+        if(null == buttonGrid || null == buttonGrid?.buttons || buttonGrid?.buttons.length === 0) {
             return html``;
         }
 
-        return buttonGrid.buttons.map(button => html`
-                ${this.renderIconButton(button, device)}
-            `)};
+        return buttonGrid.buttons.map(button => this.renderIconButton(button, device));
     }
 
     private renderVolumeControls(hass: HomeAssistant, config: HarmonyCardConfig, buttonConfig: { [key: string]: HarmonyButtonConfig }, currentActivityConfig: HarmonyActivityConfig | undefined) {
