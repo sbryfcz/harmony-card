@@ -30,9 +30,6 @@ jobs:
       - name: Build
         run: npm run build
         
-  update_release_draft:
-    runs-on: ubuntu-latest
-    steps:
       # Drafts your next Release notes as Pull Requests are merged into "master"
       - name: Draft Release
         id: draft_release
