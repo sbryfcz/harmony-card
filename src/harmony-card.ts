@@ -97,7 +97,9 @@ export class HarmonyCard extends LitElement {
         var baseAttributes = { entity_id: volumeMediaPlayer };
 
         this.hass?.callService("media_player", command, Object.assign(baseAttributes, attributes || {}));
-		
+
+																											 
+		 
     }
 
     protected shouldUpdate(changedProps: PropertyValues): boolean {
@@ -307,8 +309,8 @@ export class HarmonyCard extends LitElement {
 
         return html``;
     }
-  
-  private renderMediaPlayerVolumeControls(hass: HomeAssistant, volumeMediaPlayer: string, buttonConfig: { [key: string]: HarmonyButtonConfig }) {
+
+    private renderMediaPlayerVolumeControls(hass: HomeAssistant, volumeMediaPlayer: string, buttonConfig: { [key: string]: HarmonyButtonConfig }) {
         var volume_state = hass.states[volumeMediaPlayer];
 
         var volume = volume_state.attributes.volume_level;
