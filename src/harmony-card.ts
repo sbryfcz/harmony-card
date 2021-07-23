@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, property, TemplateResult, css, PropertyValues } from 'lit-element';
+ import { LitElement, html, customElement, property, TemplateResult, css, PropertyValues } from 'lit-element';
 import {
     HomeAssistant,
     hasAction,
