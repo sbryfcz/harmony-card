@@ -91,15 +91,15 @@ export class HarmonyCard extends LitElement {
         }
     }
 
-    protected volumeCommand(e, command: string, attributes?: any) {
+    protected volumeCommand(e, volumeMediaPlayer: string, command: string, attributes?: any) {
         this.preventBubbling(e);
 
-        if (this._config?.volume_entity) {
+        var baseAttributes = { entity_id: volumeMediaPlayer };
 
-            var baseAttributes = { entity_id: this._config?.volume_entity };
+        this.hass?.callService("media_player", command, Object.assign(baseAttributes, attributes || {}));
 
-            this.hass?.callService("media_player", command, Object.assign(baseAttributes, attributes || {}));
-        }
+																											 
+		 
     }
 
     protected shouldUpdate(changedProps: PropertyValues): boolean {
@@ -235,7 +235,8 @@ export class HarmonyCard extends LitElement {
                 ?outlined="${outlined}"
                 @click="${e => this.harmonyCommand(e, command)}"
                 @touchstart="${e => this.preventBubbling(e)}"
-              ></ha-icon-button>
+              ><ha-icon icon="${icon}"></ha-icon>
+              </ha-icon-button>
             `
              : html`
               <mwc-button
@@ -288,7 +289,8 @@ export class HarmonyCard extends LitElement {
                 icon="${buttonConfig.icon}" 
                 style="${styleMap(buttonStyles)}"
                 @click="${e => this.deviceCommand(e, buttonConfig.device || device, buttonConfig.command || '')}" 
-                @touchstart="${e => this.preventBubbling(e)}">
+                @touchstart="${e => this.preventBubbling(e)}"
+            ><ha-icon icon="${buttonConfig.icon}"></ha-icon>
             </ha-icon-button>
         `;
     }
@@ -322,10 +324,10 @@ export class HarmonyCard extends LitElement {
 
         return html`
             <div class="volume-controls">
-                <ha-icon-button style="${styleMap(volumeDownStyle)}" icon="${buttonConfig['volume_down'].icon}" @click="${e => this.volumeCommand(e, 'volume_down')}" @touchstart="${e => this.preventBubbling(e)}"></ha-icon-button>
-                <ha-icon-button style="${styleMap(volumeUpStyle)}" icon="${buttonConfig['volume_up'].icon}" @click="${e => this.volumeCommand(e, 'volume_up')}" @touchstart="${e => this.preventBubbling(e)}"></ha-icon-button>
+                <ha-icon-button style="${styleMap(volumeDownStyle)}" icon="${buttonConfig['volume_down'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_down')}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_down'].icon}"></ha-icon></ha-icon-button>
+                <ha-icon-button style="${styleMap(volumeUpStyle)}" icon="${buttonConfig['volume_up'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_up')}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_up'].icon}"></ha-icon-button>
                 <paper-slider           
-                    @change=${e => this.volumeCommand(e, 'volume_set', { volume_level: e.target.value / 100 })}
+                    @change=${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_set', { volume_level: e.target.value / 100 })}
                     @click=${e => e.stopPropagation()}
                     @touchstart="${e => this.preventBubbling(e)}"
                     ?disabled=${muted}
@@ -335,7 +337,7 @@ export class HarmonyCard extends LitElement {
                     ignore-bar-touch pin>
                 </paper-slider>
                 
-                <ha-icon-button style="${styleMap(volumeMuteStyle)}" icon="${buttonConfig['volume_mute'].icon}" @click="${e => this.volumeCommand(e, 'volume_mute', { is_volume_muted: true })}" @touchstart="${e => this.preventBubbling(e)}"></ha-icon-button>
+                <ha-icon-button style="${styleMap(volumeMuteStyle)}" icon="${buttonConfig['volume_mute'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_mute', { is_volume_muted: true })}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_mute'].icon}"></ha-icon></ha-icon-button>
             </div>`;
     }
 
