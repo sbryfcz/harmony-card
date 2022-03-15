@@ -297,13 +297,13 @@ export class HarmonyCard extends LitElement {
 
     private renderVolumeControls(hass: HomeAssistant, config: HarmonyCardConfig, buttonConfig: { [key: string]: HarmonyButtonConfig }, currentActivityConfig: HarmonyActivityConfig | undefined) {
         if (currentActivityConfig?.volume_entity) {
-            return this.renderMediaPlayerVolumeControls(hass, currentActivityConfig?.volume_entity, buttonConfig);
+            return this.renderMediaPlayerVolumeControls(hass, currentActivityConfig?.volume_entity, buttonConfig, config);
         }
         else if (currentActivityConfig?.volume_device) {
             return this.renderDeviceVolumeControls(currentActivityConfig?.volume_device, buttonConfig);
         }
         else if (config.volume_entity) {
-            return this.renderMediaPlayerVolumeControls(hass, config.volume_entity, buttonConfig);
+            return this.renderMediaPlayerVolumeControls(hass, config.volume_entity, buttonConfig, config);
         }
         else if (config.volume_device) {
             return this.renderDeviceVolumeControls(config.volume_device, buttonConfig);
@@ -312,7 +312,7 @@ export class HarmonyCard extends LitElement {
         return html``;
     }
 
-    private renderMediaPlayerVolumeControls(hass: HomeAssistant, volumeMediaPlayer: string, buttonConfig: { [key: string]: HarmonyButtonConfig }) {
+    private renderMediaPlayerVolumeControls(hass: HomeAssistant, volumeMediaPlayer: string, buttonConfig: { [key: string]: HarmonyButtonConfig }, config: HarmonyCardConfig) {
         var volume_state = hass.states[volumeMediaPlayer];
 
         var volume = volume_state.attributes.volume_level;
@@ -322,17 +322,19 @@ export class HarmonyCard extends LitElement {
         var volumeUpStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_up'].color });
         var volumeMuteStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_mute'].color });
 
+        const volumeMultiplier = 100 * (config.volume_scale_multiplier || 1);
+
         return html`
             <div class="volume-controls">
                 <ha-icon-button style="${styleMap(volumeDownStyle)}" icon="${buttonConfig['volume_down'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_down')}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_down'].icon}"></ha-icon></ha-icon-button>
                 <ha-icon-button style="${styleMap(volumeUpStyle)}" icon="${buttonConfig['volume_up'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_up')}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_up'].icon}"></ha-icon-button>
-                <paper-slider           
-                    @change=${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_set', { volume_level: e.target.value / 100 })}
+                <paper-slider
+                    @change=${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_set', { volume_level: e.target.value / volumeMultiplier })}
                     @click=${e => e.stopPropagation()}
                     @touchstart="${e => this.preventBubbling(e)}"
                     ?disabled=${muted}
-                    min=0 max=100
-                    value=${volume * 100}
+                    min=0 max=${volumeMultiplier}
+                    value=${volume * volumeMultiplier}
                     dir=${'ltr'}
                     ignore-bar-touch pin>
                 </paper-slider>

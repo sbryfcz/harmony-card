@@ -25,6 +25,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | entity            | string  | **Required** | Home Assistant entity ID of Harmony         |                     |
 | volume_entity     | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
 | volume_device     | string  | **Optional** | Harmony device name to control volume       |                     |
+| volume_scale_multiplier     | number  | **Optional** | Multiplier required to convert between `volume_entity` and volume slider | 1 |
 | hide_keyPad       | boolean | **Optional** | Hides the KeyPad                            | `true`              |
 | activites         | Activity| **Required** | List of Activities (see below)              |                     |
 | show_activities_icons | boolean  | **Optional** | Show activity buttons as icons         | `false`             |
@@ -45,6 +46,7 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | icon               | string  | **Optional** | The icon to display for the button (ex. `mdi:` + http://materialdesignicons.com/)|          |
 | volume_entity      | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
 | volume_device      | string  | **Optional** | Harmony device name to control volume       |                     |
+| volume_scale_multiplier     | number  | **Optional** | Multiplier required to convert between `volume_entity` and volume slider | 1 |
 | hide_keyPad        | boolean | **Optional** | Hides the KeyPad                            | `true`              |
 | buttons            | Button Dictionary  | **Optional** | A dictionary/object of button config to override defaults |                  |
 ## Action Options
@@ -215,6 +217,8 @@ Furthermore, volume controls try to use specified media players (if configured) 
 3. Card Level volume_entity
 4. Card Level volume_device
 
+If your `volume_entity` uses a scale other than 0 (min) - 100 (max), then you can set `volume_scale_multiplier` to convert from the 0-1 scale of Home Assistant to match the numbers displayed on your receiver. For example, if your receiver goes from 0 - 60, then a multiplier of `0.6` will ensure the volume slider value matches the receiver.
+
 #### Devices
 Devices to be used for buttons follow the following order of precedence:
 1. Activity-button level device
@@ -248,6 +252,7 @@ resources:
 - type: 'custom:harmony-card'
   entity: remote.living_room_hub
   volume_entity: media_player.living_room
+  volume_scale_multiplier: 0.6
   scale: 1.25
   activities:
   - name: Play Xbox One

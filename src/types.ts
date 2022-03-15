@@ -19,6 +19,7 @@ export interface HarmonyCardConfig {
     hold_action?: ActionConfig;
     double_tap_action?: ActionConfig;
     buttons?: { [key: string]: HarmonyButtonConfig };
+    volume_scale_multiplier?: number;
 }
 
 export interface HarmonyActivityConfig {
