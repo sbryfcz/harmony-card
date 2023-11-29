@@ -30,6 +30,8 @@ console.info(
     'color: white; font-weight: bold; background: dimgray',
 );
 
+// test
+
 @customElement('harmony-card')
 export class HarmonyCard extends LitElement {
     public static async getConfigElement(): Promise<LovelaceCardEditor> {
