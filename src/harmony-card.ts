@@ -326,7 +326,7 @@ export class HarmonyCard extends LitElement {
             <div class="volume-controls">
                 <ha-icon-button style="${styleMap(volumeDownStyle)}" icon="${buttonConfig['volume_down'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_down')}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_down'].icon}"></ha-icon></ha-icon-button>
                 <ha-icon-button style="${styleMap(volumeUpStyle)}" icon="${buttonConfig['volume_up'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_up')}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_up'].icon}"></ha-icon-button>
-                <paper-slider           
+                <ha-slider           
                     @change=${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_set', { volume_level: e.target.value / 100 })}
                     @click=${e => e.stopPropagation()}
                     @touchstart="${e => this.preventBubbling(e)}"
@@ -335,7 +335,7 @@ export class HarmonyCard extends LitElement {
                     value=${volume * 100}
                     dir=${'ltr'}
                     ignore-bar-touch pin>
-                </paper-slider>
+                </ha-slider>
                 
                 <ha-icon-button style="${styleMap(volumeMuteStyle)}" icon="${buttonConfig['volume_mute'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_mute', { is_volume_muted: true })}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_mute'].icon}"></ha-icon></ha-icon-button>
             </div>`;
