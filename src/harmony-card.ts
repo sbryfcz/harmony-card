@@ -241,12 +241,11 @@ export class HarmonyCard extends LitElement {
               </ha-icon-button>
             `
              : html`
-              <mwc-button
-                ?outlined="${outlined}"
-                label="${label}"
+              <ha-button 
+                appearance="${outlined ? 'filled':'plain'}" size="small"
                 @click="${e => this.harmonyCommand(e, command)}"
                 @touchstart="${e => this.preventBubbling(e)}"
-              ></mwc-button>        
+              >${label}</ha-button>        
             `}
         `;
     }
