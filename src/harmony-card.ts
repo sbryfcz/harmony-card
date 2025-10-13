@@ -342,7 +342,7 @@ export class HarmonyCard extends LitElement {
                     ignore-bar-touch pin>
                 </ha-slider>
                 
-                <ha-icon-button style="${styleMap(volumeMuteStyle)}" icon="${buttonConfig['volume_mute'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_mute', { is_volume_muted: true })}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_mute'].icon}"></ha-icon></ha-icon-button>
+                <ha-icon-button style="${styleMap(volumeMuteStyle)}" icon="${buttonConfig['volume_mute'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_mute', { is_volume_muted: ! muted })}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_mute'].icon}"></ha-icon></ha-icon-button>
             </div>`;
     }
 
