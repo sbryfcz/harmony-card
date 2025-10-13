@@ -25,6 +25,9 @@ Hey there! Hope you are enjoying my work. Help me out for a couple of :beers: or
 | entity            | string  | **Required** | Home Assistant entity ID of Harmony         |                     |
 | volume_entity     | string  | **Optional** | Home Assistant entity ID of volume control media_player|          |
 | volume_device     | string  | **Optional** | Harmony device name to control volume       |                     |
+| volume_min        | number  | **Optional** | Minimum volume out of 100 for slider        | 0                   |
+| volume_max        | number  | **Optional** | Maximum volume out of 100 for slider        | 100                 |
+| volume_step       | number  | **Optional** | Multiplier(int) for volume up/down commands | 1                   |
 | hide_keyPad       | boolean | **Optional** | Hides the KeyPad                            | `true`              |
 | activites         | Activity| **Required** | List of Activities (see below)              |                     |
 | show_activities_icons | boolean  | **Optional** | Show activity buttons as icons         | `false`             |

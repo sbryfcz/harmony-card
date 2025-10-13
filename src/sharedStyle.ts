@@ -54,7 +54,7 @@ const sharedStyle = css`
   .activities-icons {
     justify-content: space-evenly;
   }
-  .activities>mwc-button:not(:first-child) {
+  .activities>ha-button:not(:first-child) {
     flex-grow: 1;
   }
 
@@ -77,10 +77,11 @@ const sharedStyle = css`
 
   .volume-controls {
       display: flex;
+      align-items: center;
       justify-content: center;
   }
 
-  .volume-controls>paper-slider {
+  .volume-controls>ha-slider {
     flex: 1;
   }
 `;
