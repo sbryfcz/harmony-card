@@ -98,10 +98,13 @@ export class HarmonyCard extends LitElement {
 
         var baseAttributes = { entity_id: volumeMediaPlayer };
 
-        this.hass?.callService("media_player", command, Object.assign(baseAttributes, attributes || {}));
-
-																											 
-		 
+        let howMany = 1;
+        if ((command == 'volume_up' || command == 'volume_down') && this._config?.volume_step && this._config?.volume_step > 1)
+            howMany = this._config.volume_step;
+        
+        for (let i = 0; i < howMany; i++)
+            this.hass?.callService("media_player", command, Object.assign(baseAttributes, attributes || {}));
+        
     }
 
     protected shouldUpdate(changedProps: PropertyValues): boolean {
@@ -322,17 +325,18 @@ export class HarmonyCard extends LitElement {
         var volumeDownStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_down'].color });
         var volumeUpStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_up'].color });
         var volumeMuteStyle = Object.assign({} as StyleInfo, { color: buttonConfig['volume_mute'].color });
-
+        var volumeSliderMin = this._config?.volume_min || 0;
+        var volumeSliderMax = this._config?.volume_max || 100;
         return html`
             <div class="volume-controls">
                 <ha-icon-button style="${styleMap(volumeDownStyle)}" icon="${buttonConfig['volume_down'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_down')}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_down'].icon}"></ha-icon></ha-icon-button>
                 <ha-icon-button style="${styleMap(volumeUpStyle)}" icon="${buttonConfig['volume_up'].icon}" @click="${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_up')}" @touchstart="${e => this.preventBubbling(e)}"><ha-icon icon="${buttonConfig['volume_up'].icon}"></ha-icon-button>
-                <ha-slider           
+                <ha-slider
                     @change=${e => this.volumeCommand(e, volumeMediaPlayer, 'volume_set', { volume_level: e.target.value / 100 })}
                     @click=${e => e.stopPropagation()}
                     @touchstart="${e => this.preventBubbling(e)}"
                     ?disabled=${muted}
-                    min=0 max=100
+                    min=${volumeSliderMin} max=${volumeSliderMax}
                     value=${volume * 100}
                     dir=${'ltr'}
                     ignore-bar-touch pin>
